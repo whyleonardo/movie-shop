@@ -79,7 +79,7 @@ export const SidebarWithHeader = () => {
       {/* mobilenav */}
       <MobileNav onOpen={onOpen} />
       <Box ml={{ base: 0, md: 60 }} p='4'>
-        {pathname === '/store' ? 'olá' : <AnimatedRoutes />}
+        {pathname === '/' ? 'olá' : <AnimatedRoutes />}
       </Box>
     </Box>
   )

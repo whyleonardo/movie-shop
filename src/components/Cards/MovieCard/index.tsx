@@ -14,25 +14,29 @@ import {
 } from '@chakra-ui/react'
 
 import { FavouriteButton } from '@components/Buttons/FavouriteButton'
+import { MovieProps } from 'src/types/movieTypes'
 import { PriceTag } from '@components/Brand/PriceTag'
-import { Product } from '@data/_data'
 import { Rating } from '@components/Brand/Rating'
 
 interface Props {
-  product: Product
+  movie: MovieProps
   rootProps?: StackProps
 }
 
+const api = {
+  imageURL: import.meta.env.VITE_URL_IMAGE
+}
+
 export const MovieCard = (props: Props) => {
-  const { product, rootProps } = props
-  const { name, imageUrl, price, salePrice, rating } = product
+  const { movie, rootProps } = props
+  const { title, poster_path, id, overview, vote_average, vote_count } = movie
   return (
     <Stack spacing={useBreakpointValue({ base: '4', md: '5' })} {...rootProps}>
       <Box position="relative">
-        <AspectRatio ratio={4 / 3}>
+        <AspectRatio ratio={9 / 16}>
           <Image
-            src={imageUrl}
-            alt={name}
+            src={api.imageURL + poster_path}
+            alt={title}
             draggable="false"
             fallback={<Skeleton />}
             borderRadius={useBreakpointValue({ base: 'md', md: 'xl' })}
@@ -42,20 +46,20 @@ export const MovieCard = (props: Props) => {
           position="absolute"
           top="4"
           right="4"
-          aria-label={`Add ${name} to your favourites`}
+          aria-label={`Add ${title} to your favourites`}
         />
       </Box>
       <Stack>
         <Stack spacing="1">
           <Text fontWeight="medium" color={useColorModeValue('gray.700', 'gray.400')}>
-            {name}
+            {title}
           </Text>
-          <PriceTag price={price} salePrice={salePrice} currency="USD" />
+          <PriceTag price={19} salePrice={19} currency="USD" />
         </Stack>
         <HStack>
-          <Rating defaultValue={rating} size="sm" />
+          <Rating defaultValue={Math.floor(vote_average / 2)} size="sm" />
           <Text fontSize="sm" color={useColorModeValue('gray.600', 'gray.400')}>
-            12 Reviews
+            {vote_count} votes
           </Text>
         </HStack>
       </Stack>
