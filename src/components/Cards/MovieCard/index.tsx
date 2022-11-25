@@ -4,7 +4,7 @@ import {
   Button,
   HStack,
   Image,
-  Link,
+  Link as LinkChakra,
   Skeleton,
   Stack,
   StackProps,
@@ -14,6 +14,7 @@ import {
 } from '@chakra-ui/react'
 
 import { FavouriteButton } from '@components/Buttons/FavouriteButton'
+import { Link } from 'react-router-dom'
 import { MovieProps } from 'src/types/movieTypes'
 import { PriceTag } from '@components/Brand/PriceTag'
 import { Rating } from '@components/Brand/Rating'
@@ -30,16 +31,22 @@ const api = {
 export const MovieCard = (props: Props) => {
   const { movie, rootProps } = props
   const { title, poster_path, id, overview, vote_average, vote_count } = movie
+
+  const resumedName = title.length > 27 ? `${title.slice(0, 27).trim()}...` : title
+
   return (
-    <Stack spacing={useBreakpointValue({ base: '4', md: '5' })} {...rootProps}>
+    <Stack spacing={useBreakpointValue({ base: '4', md: '5' })} {...rootProps} role='group' >
       <Box position="relative">
-        <AspectRatio ratio={9 / 16}>
+        <AspectRatio ratio={12 / 16}>
           <Image
             src={api.imageURL + poster_path}
             alt={title}
             draggable="false"
             fallback={<Skeleton />}
             borderRadius={useBreakpointValue({ base: 'md', md: 'xl' })}
+            transform='auto'
+            _groupHover={{ scale: 1.05 }}
+            transition='350ms ease'
           />
         </AspectRatio>
         <FavouriteButton
@@ -52,7 +59,7 @@ export const MovieCard = (props: Props) => {
       <Stack>
         <Stack spacing="1">
           <Text fontWeight="medium" color={useColorModeValue('gray.700', 'gray.400')}>
-            {title}
+            {resumedName}
           </Text>
           <PriceTag price={19} salePrice={19} currency="USD" />
         </Stack>
@@ -67,13 +74,16 @@ export const MovieCard = (props: Props) => {
         <Button colorScheme="blue" width="full">
           Add to cart
         </Button>
-        <Link
+        <LinkChakra
+          as={Link}
+          to={`/movie/${id}`}
           textDecoration="underline"
           fontWeight="medium"
           color={useColorModeValue('gray.600', 'gray.400')}
+          _hover={{ color: 'yellow.500' }}
         >
-          Quick shop
-        </Link>
+          Details
+        </LinkChakra>
       </Stack>
     </Stack>
   )
