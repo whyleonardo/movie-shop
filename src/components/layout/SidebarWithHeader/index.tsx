@@ -61,7 +61,9 @@ export const SidebarWithHeader = () => {
     <Box minH='100vh' bg={useColorModeValue('gray.100', 'gray.900')}>
       <SidebarContent
         onClose={() => onClose}
-        display={{ base: 'none', md: 'block' }}
+        display={{ base: 'none', md: 'flex' }}
+        flexDirection='column'
+        gap='2'
       />
       <Drawer
         autoFocus={false}
@@ -130,6 +132,7 @@ interface NavItemProps extends FlexProps {
 }
 
 const NavItem = ({ icon, children, path, onClose, ...rest }: NavItemProps) => {
+  const { pathname } = useLocation()
   return (
     <Link as={RouterLink} onClick={onClose} to={path} style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
       <Flex
@@ -139,8 +142,10 @@ const NavItem = ({ icon, children, path, onClose, ...rest }: NavItemProps) => {
         borderRadius='lg'
         role='group'
         cursor='pointer'
+        bg={path == pathname ? 'blue.500' : 'transparent'}
+        color={path == pathname ? 'white' : undefined}
         _hover={{
-          bg: 'cyan.400',
+          bg: 'blue.500',
           color: 'white',
         }}
         {...rest}>
@@ -156,7 +161,7 @@ const NavItem = ({ icon, children, path, onClose, ...rest }: NavItemProps) => {
         )}
         {children}
       </Flex>
-    </Link>
+    </Link >
   )
 }
 
