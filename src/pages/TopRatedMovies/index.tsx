@@ -1,10 +1,9 @@
-
-import * as React from 'react'
-import { SimpleGrid, SimpleGridProps, Skeleton } from '@chakra-ui/react'
 import { MovieCard } from '@components/Cards/MovieCard'
+import { MovieGrid } from '@components/layout/MovieGrid'
 import { MovieProps } from 'src/types/movieTypes'
 import { Paginator } from '@components/Buttons/Paginator/'
 import useAxios from 'axios-hooks'
+import { useState } from 'react'
 
 const api = {
   url: import.meta.env.VITE_URL_TOPRATED_MOVIES,
@@ -13,7 +12,7 @@ const api = {
 
 
 export const TopRatedMovies = () => {
-  const [page, setPage] = React.useState(1)
+  const [page, setPage] = useState(1)
 
   const query = `${api.url}api_key=${api.key}&language=en-US`
 
@@ -26,34 +25,14 @@ export const TopRatedMovies = () => {
     <>
       <Paginator setPage={setPage} currentPage={page} />
 
-      <ProductGrid>
+      <MovieGrid>
         {data && data.results.map((movie: MovieProps) => (
           <MovieCard key={movie.id} movie={movie} />
         ))}
-      </ProductGrid>
+      </MovieGrid>
     </>
   )
 }
 
 
-export const ProductGrid = (props: SimpleGridProps) => {
-  const columns = React.useMemo(() => {
-    const count = React.Children.toArray(props.children).filter(React.isValidElement).length
-    return {
-      base: Math.min(1, count),
-      md: Math.min(3, count),
-      lg: Math.min(4, count),
-      xl: Math.min(4, count),
-    }
-  }, [props.children])
 
-  return (
-    <SimpleGrid
-      columns={columns}
-      columnGap={{ base: '4', md: '6' }}
-      rowGap={{ base: '8', md: '10' }}
-      {...props}
-      fallback={<Skeleton />}
-    />
-  )
-}
