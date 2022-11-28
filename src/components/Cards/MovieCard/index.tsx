@@ -45,7 +45,7 @@ export const MovieCard = (props: Props) => {
             fallback={<Skeleton />}
             borderRadius={useBreakpointValue({ base: 'md', md: 'xl' })}
             transform='auto'
-            _groupHover={{ scale: 1.05 }}
+            _groupHover={{ scale: useBreakpointValue({ base: 'none', md: 1.05 }) }}
             transition='350ms ease'
           />
         </AspectRatio>
@@ -61,7 +61,7 @@ export const MovieCard = (props: Props) => {
           <Text fontWeight="medium" color={useColorModeValue('gray.700', 'gray.400')}>
             {resumedName}
           </Text>
-          <PriceTag price={19} salePrice={19} currency="USD" />
+          <PriceTag price={19.99} salePrice={9.99} currency="USD" />
         </Stack>
         <HStack>
           <Rating defaultValue={Math.floor(vote_average / 2)} size="sm" />

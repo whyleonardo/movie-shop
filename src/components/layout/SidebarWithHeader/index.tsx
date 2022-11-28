@@ -97,6 +97,8 @@ interface SidebarProps extends BoxProps {
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   return (
     <Box
+      display='flex'
+      flexDirection='column'
       transition='200ms ease'
       bg={useColorModeValue('white', 'gray.900')}
       borderRight='1px'
@@ -105,6 +107,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       pos='fixed'
       h='full'
       {...rest}
+      gap='2'
     >
       <Flex h='20' alignItems='center' mx='8' w='80%' justifyContent='space-between'>
         <Logo display='flex' />
