@@ -30,7 +30,7 @@ const api = {
 
 export const MovieCard = (props: Props) => {
   const { movie, rootProps } = props
-  const { title, poster_path, id, overview, vote_average, vote_count } = movie
+  const { title, poster_path, id, vote_average, vote_count } = movie
 
   const resumedName = title.length > 27 ? `${title.slice(0, 27).trim()}...` : title
 
@@ -42,7 +42,7 @@ export const MovieCard = (props: Props) => {
             src={api.imageURL + poster_path}
             alt={title}
             draggable="false"
-            fallback={<Skeleton />}
+            fallback={<Skeleton rounded={useBreakpointValue({ base: 'md', md: 'xl' })} />}
             borderRadius={useBreakpointValue({ base: 'md', md: 'xl' })}
             transform='auto'
             _groupHover={{ scale: useBreakpointValue({ base: 'none', md: 1.05 }) }}

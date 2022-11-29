@@ -8,6 +8,13 @@ interface PaginatorProps {
 }
 
 export const Paginator = ({ currentPage, setPage }: PaginatorProps) => {
+
+  const backPageToTop = () => {
+    window.scrollTo({
+      top: 0, behavior: 'smooth'
+    })
+  }
+
   return (
     <Flex
       w="full"
@@ -21,6 +28,7 @@ export const Paginator = ({ currentPage, setPage }: PaginatorProps) => {
         onChange={(page) => {
           // @ts-ignore
           setPage(page)
+          backPageToTop()
         }}
         total={50}
         paginationProps={{

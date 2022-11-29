@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Favorites } from '@pages/Favorites'
 import { Login } from '@pages/Login'
 import { Movie } from '@pages/Movie'
 import { PopularMovies } from '@pages/PopularMovies'
@@ -16,6 +17,7 @@ export const App = () => {
           <Route path='/popular' element={<PopularMovies />} />
           <Route path='/upcoming' element={<UpcomingMovies />} />
           <Route path='/top-rated' element={<TopRatedMovies />} />
+          <Route path='/favorites' element={<Favorites />} />
         </Route>
       </Routes>
     </BrowserRouter>

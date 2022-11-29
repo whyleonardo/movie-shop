@@ -23,13 +23,13 @@ export const TopRatedMovies = () => {
 
   return (
     <>
-      <Paginator setPage={setPage} currentPage={page} />
-
       <MovieGrid>
         {data && data.results.map((movie: MovieProps) => (
           <MovieCard key={movie.id} movie={movie} />
         ))}
       </MovieGrid>
+
+      <Paginator setPage={setPage} currentPage={page} />
     </>
   )
 }

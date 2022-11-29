@@ -5,8 +5,6 @@ import { Paginator } from '@components/Buttons/Paginator/'
 import useAxios from 'axios-hooks'
 import { useState } from 'react'
 
-
-
 const api = {
   url: import.meta.env.VITE_URL_POPULAR_MOVIES,
   key: import.meta.env.VITE_API_KEY_V3
@@ -23,13 +21,13 @@ export const PopularMovies = () => {
 
   return (
     <>
-      <Paginator setPage={setPage} currentPage={page} />
-
       <MovieGrid>
         {data && data.results.map((movie: MovieProps) => (
           <MovieCard key={movie.id} movie={movie} />
         ))}
       </MovieGrid>
+
+      <Paginator setPage={setPage} currentPage={page} />
     </>
   )
 }
