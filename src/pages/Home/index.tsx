@@ -1,24 +1,26 @@
 import { Flex, Spinner } from '@chakra-ui/react'
+import { useEffect, useState } from 'react'
 import { MovieCard } from '@components/Cards/MovieCard'
 import { MovieGrid } from '@components/layout/MovieGrid'
 import { MovieProps } from 'src/types/movieTypes'
 import { Paginator } from '@components/Buttons/Paginator/'
+import { api } from '@data/api'
 import useAxios from 'axios-hooks'
-import { useState } from 'react'
-
-const api = {
-  url: import.meta.env.VITE_URL_NOW_PLAYING,
-  key: import.meta.env.VITE_API_KEY_V3
-}
+import { useMovies } from '@context/Movies'
 
 export const Home = () => {
   const [page, setPage] = useState(1)
+  const { setNowPlaying } = useMovies()
 
-  const query = `${api.url}api_key=${api.key}&language=en-US`
+  const query = `${api.nowPlaying}api_key=${api.key}&language=en-US`
   const [{ data, loading }] = useAxios({
     url: query,
     params: { page }
   })
+
+  useEffect(() => {
+    setNowPlaying(data?.results)
+  }, [data])
 
   return (
     <>

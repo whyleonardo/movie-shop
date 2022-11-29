@@ -177,8 +177,6 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   const { pathname } = useLocation()
   const isMovieDetailsLocation = pathname.includes('/movie')
 
-  console.log(isMovieDetailsLocation)
-
   return (
     <Flex
       ml={{ base: 0, md: 60 }}

@@ -18,7 +18,7 @@ import { Link } from 'react-router-dom'
 import { MovieProps } from 'src/types/movieTypes'
 import { PriceTag } from '@components/Brand/PriceTag'
 import { Rating } from '@components/Brand/Rating'
-
+import { useCart } from '@context/Cart'
 interface Props {
   movie: MovieProps
   rootProps?: StackProps
@@ -31,6 +31,10 @@ const api = {
 export const MovieCard = (props: Props) => {
   const { movie, rootProps } = props
   const { title, poster_path, id, vote_average, vote_count } = movie
+
+  const { handleAddMovieToCart, handleRemoveMovieFromCart, filteredCartMoviesID } = useCart()
+
+  const isMovieOnCart = filteredCartMoviesID.includes(id)
 
   const resumedName = title.length > 27 ? `${title.slice(0, 27).trim()}...` : title
 
@@ -71,8 +75,8 @@ export const MovieCard = (props: Props) => {
         </HStack>
       </Stack>
       <Stack align="center">
-        <Button colorScheme="blue" width="full">
-          Add to cart
+        <Button onClick={isMovieOnCart ? () => handleRemoveMovieFromCart(id) : () => handleAddMovieToCart(props.movie)} colorScheme="blue" width="full">
+          {isMovieOnCart ? 'Remove from cart' : 'Add to cart'}
         </Button>
         <LinkChakra
           as={Link}

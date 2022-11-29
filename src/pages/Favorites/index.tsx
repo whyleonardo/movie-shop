@@ -2,12 +2,9 @@ import { MovieCard } from '@components/Cards/MovieCard'
 import { MovieGrid } from '@components/layout/MovieGrid'
 import { MovieProps } from 'src/types/movieTypes'
 import { Paginator } from '@components/Buttons/Paginator/'
+import { api } from '@data/api'
 import { useState } from 'react'
 
-const api = {
-  url: import.meta.env.VITE_URL_UPCOMING_MOVIES,
-  key: import.meta.env.VITE_API_KEY_V3
-}
 
 export const Favorites = () => {
   const [page, setPage] = useState(1)

@@ -1,27 +1,27 @@
 import { Flex, Spinner } from '@chakra-ui/react'
+import { useEffect, useState } from 'react'
 import { MovieCard } from '@components/Cards/MovieCard'
 import { MovieGrid } from '@components/layout/MovieGrid'
 import { MovieProps } from 'src/types/movieTypes'
 import { Paginator } from '@components/Buttons/Paginator/'
+import { api } from '@data/api'
 import useAxios from 'axios-hooks'
-import { useState } from 'react'
-
-const api = {
-  url: import.meta.env.VITE_URL_TOPRATED_MOVIES,
-  key: import.meta.env.VITE_API_KEY_V3
-}
-
-
+import { useMovies } from '@context/Movies'
 
 export const TopRatedMovies = () => {
   const [page, setPage] = useState(1)
+  const { setTopRatedMovies } = useMovies()
 
-  const query = `${api.url}api_key=${api.key}&language=en-US`
+  const query = `${api.topRated}api_key=${api.key}&language=en-US`
 
   const [{ data, loading }] = useAxios({
     url: query,
     params: { page }
   })
+
+  useEffect(() => {
+    setTopRatedMovies(data?.results)
+  }, [data])
 
   return (
     <>
