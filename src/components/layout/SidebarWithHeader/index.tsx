@@ -35,10 +35,11 @@ import {
 import { Link as RouterLink, useLocation } from 'react-router-dom'
 
 import { AnimatedRoutes } from '@components/layout/AnimatedRoutes'
+import { BackPreviousPage } from '@components/Buttons/BackPreviousPage'
 import { ColorModeSwitch } from '@components/ColorModeSwitch'
+import { Home } from '@pages/Home'
 import { IconType } from 'react-icons'
 import { Logo } from '@components/Brand/Logo'
-import { BackPreviousPage } from '@components/Buttons/BackPreviousPage'
 
 interface LinkItemProps {
   name: string
@@ -85,7 +86,7 @@ export const SidebarWithHeader = () => {
         ml={{ base: 0, md: 60 }}
         p='4'
       >
-        {pathname === '/' ? 'olá' : <AnimatedRoutes />}
+        {pathname === '/' ? <Home /> : <AnimatedRoutes />}
       </Box>
     </Box>
   )
