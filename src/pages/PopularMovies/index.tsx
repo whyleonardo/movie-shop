@@ -1,3 +1,4 @@
+import { Flex, Spinner } from '@chakra-ui/react'
 import { MovieCard } from '@components/Cards/MovieCard'
 import { MovieGrid } from '@components/layout/MovieGrid'
 import { MovieProps } from 'src/types/movieTypes'
@@ -14,20 +15,27 @@ export const PopularMovies = () => {
   const [page, setPage] = useState(1)
 
   const query = `${api.url}api_key=${api.key}&language=en-US`
-  const [{ data, loading, error }, refetch] = useAxios({
+  const [{ data, loading }] = useAxios({
     url: query,
     params: { page }
   })
 
   return (
     <>
-      <MovieGrid>
-        {data && data.results.map((movie: MovieProps) => (
-          <MovieCard key={movie.id} movie={movie} />
-        ))}
-      </MovieGrid>
+      {!loading
+        ? <>
+          <MovieGrid>
+            {data && data.results.map((movie: MovieProps) => (
+              <MovieCard key={movie.id} movie={movie} />
+            ))}
+          </MovieGrid>
 
-      <Paginator setPage={setPage} currentPage={page} />
+          <Paginator setPage={setPage} currentPage={page} />
+        </>
+        : <Flex w='full' h='lg' justifyContent='center' alignItems='center'>
+          <Spinner />
+        </Flex>
+      }
     </>
   )
 }
