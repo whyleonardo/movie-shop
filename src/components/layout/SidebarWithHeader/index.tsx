@@ -188,7 +188,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       bg={useColorModeValue('white', 'gray.900')}
       borderBottomWidth='1px'
       borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
-      justifyContent={isMovieDetailsLocation ? 'space-between' : 'flex-end'}
+      justifyContent={isMovieDetailsLocation ? 'space-between' : { base: 'space-between', md: 'flex-end' }}
       {...rest}>
 
       {isMovieDetailsLocation
