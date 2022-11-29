@@ -1,6 +1,7 @@
 import { Route, Routes, useLocation } from 'react-router-dom'
 
 import { AnimatePresence } from 'framer-motion'
+import { Cart } from '@pages/Cart'
 import { Favorites } from '@pages/Favorites'
 import { Movie } from '@pages/Movie'
 import { PopularMovies } from '@pages/PopularMovies'
@@ -18,6 +19,7 @@ export const AnimatedRoutes = () => {
         <Route path='/upcoming' element={<UpcomingMovies />} />
         <Route path='/top-rated' element={<TopRatedMovies />} />
         <Route path='/favorites' element={<Favorites />} />
+        <Route path='/cart' element={<Cart />} />
       </Routes>
     </AnimatePresence>
   )

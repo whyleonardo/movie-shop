@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Cart } from '@pages/Cart'
 import { CartProvider } from '@context/Cart'
 import { Favorites } from '@pages/Favorites'
 import { Login } from '@pages/Login'
@@ -22,6 +23,7 @@ export const App = () => {
               <Route path='/upcoming' element={<UpcomingMovies />} />
               <Route path='/top-rated' element={<TopRatedMovies />} />
               <Route path='/favorites' element={<Favorites />} />
+              <Route path='/cart' element={<Cart />} />
             </Route>
           </Routes>
         </BrowserRouter>

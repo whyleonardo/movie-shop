@@ -38,10 +38,11 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     if (!filteredCartMoviesID.includes(movie.id)) {
       setMoviesCart([...moviesCart, movie])
     }
-    // toast({
-    //   title: 'Filme adicionado ao carrinho!',
-    //   status: 'success'
-    // })
+
+    toast({
+      title: 'Filme adicionado ao carrinho!',
+      status: 'success'
+    })
 
   }
 
@@ -49,12 +50,11 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     // setAvoidCartLocalStorage(false)
     const removeMovieFromCart = moviesCart.map((movie: MovieProps) => movie).filter((movie: MovieProps) => movie.id !== id && movie)
     setMoviesCart(removeMovieFromCart)
+
     toast({
       title: 'Filme removido do carrinho!',
       status: 'info',
     })
-
-    console.log(id)
   }
 
   const handleClearAllCart = () => {
@@ -62,10 +62,8 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     setMoviesCart(clearedCart)
   }
 
-
   useEffect(() => {
     // setAvoidCartLocalStorage(true)
-
     const cartLocalStorage = JSON.parse(localStorage.getItem('cart') as string)
     cartLocalStorage !== null && setMoviesCart(cartLocalStorage)
   }, [])

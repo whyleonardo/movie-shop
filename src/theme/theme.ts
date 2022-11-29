@@ -6,6 +6,20 @@ const config: ThemeConfig = {
   disableTransitionOnChange: false,
 }
 
+const styles = {
+  global: {
+    body: {
+      // fontFamily: 'Inter, sans- serif',
+      overflowX: 'hidden',
+      '&::-webkit-scrollbar': { width: '5px', height: '5px' },
+      '&::-webkit-scrollbar-thumb': {
+        background: 'blue.500',
+        borderRadius: '999px !important',
+      },
+    },
+  },
+}
+
 const colors = {
   brand: {
     100: '#99a0b2ff',
@@ -19,4 +33,8 @@ const colors = {
     900: '#3a3c50ff',
   },
 }
-export const theme = extendTheme({ config, colors })
+export const theme = extendTheme({
+  config,
+  colors,
+  styles,
+})

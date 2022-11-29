@@ -29,7 +29,8 @@ import {
   FaChevronDown,
   FaHeart,
   FaHome,
-  FaStar,
+  FaShoppingCart,
+  FaStar
 } from 'react-icons/fa'
 
 import { Link as RouterLink, useLocation } from 'react-router-dom'
@@ -53,6 +54,7 @@ const LinkItems: Array<LinkItemProps> = [
   { name: 'Top Rated', icon: FaStar, path: '/top-rated' },
   { name: 'Upcoming', icon: FaCalendar, path: '/upcoming' },
   { name: 'Favorites', icon: FaHeart, path: '/favorites' },
+  { name: 'Cart', icon: FaShoppingCart, path: '/cart' },
 ]
 
 export const SidebarWithHeader = () => {
@@ -85,6 +87,18 @@ export const SidebarWithHeader = () => {
       <Box
         ml={{ base: 0, md: 60 }}
         p='4'
+        css={{
+          '&::-webkit-scrollbar': {
+            width: '4px',
+          },
+          '&::-webkit-scrollbar-track': {
+            width: '6px',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            background: 'red',
+            borderRadius: '24px',
+          },
+        }}
       >
         {pathname === '/' ? <Home /> : <AnimatedRoutes />}
       </Box>
