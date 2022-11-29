@@ -4,7 +4,7 @@ Uma aplicação que busca prover ao usuário, uma loja com os mais atuais e dive
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![App Screenshot](https://github.com/whyleonardo/movie-shop/blob/main/public/print-1.png?raw=true)
 
 ## Stack utilizada
 
