@@ -16,9 +16,8 @@ export const MovieGrid = (props: SimpleGridProps) => {
   return (
     <SimpleGrid
       as={motion.div}
-      transform='auto'
-      initial={{ opacity: 0, translateX: -25 }}
-      animate={{ opacity: 1, translateX: 0 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       columns={columns}
       columnGap={{ base: '4', md: '6' }}
