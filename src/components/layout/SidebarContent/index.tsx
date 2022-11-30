@@ -6,6 +6,7 @@ import { IconType } from 'react-icons'
 import { Logo } from '@components/Brand/Logo'
 import { NavItem } from '@components/layout/NavItem'
 import { useCart } from '@context/Cart'
+import { useFavorites } from '@context/Favorites'
 
 interface SidebarProps extends BoxProps {
   onClose: () => void
@@ -20,13 +21,15 @@ interface LinkItemProps {
 
 export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   const { moviesCart } = useCart()
+  const { favoriteMovies } = useFavorites()
+
 
   const LinkItems: Array<LinkItemProps> = [
     { name: 'Home', icon: FaHome, path: '/' },
     { name: 'Popular', icon: FaChartLine, path: '/popular' },
     { name: 'Top Rated', icon: FaStar, path: '/top-rated' },
     { name: 'Upcoming', icon: FaCalendar, path: '/upcoming' },
-    { name: 'Favorites', icon: FaHeart, path: '/favorites', itemsLength: 2 },
+    { name: 'Favorites', icon: FaHeart, path: '/favorites', itemsLength: favoriteMovies.length },
     { name: 'Cart', icon: FaShoppingCart, path: '/cart', itemsLength: moviesCart.length },
   ]
 

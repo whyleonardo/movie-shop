@@ -41,7 +41,7 @@ export const NavItem = ({ icon, children, path, onClose, itemsLength, ...rest }:
           {children}
         </Flex>
 
-        {itemsLength && <Circle size='1.5rem' bg='red.500'>{itemsLength}</Circle>}
+        {itemsLength !== undefined && <Circle size='1.5rem' bg='red.500'>{itemsLength}</Circle>}
       </Flex>
     </Link >
   )
