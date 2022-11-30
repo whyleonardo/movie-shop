@@ -1,19 +1,34 @@
-import { Icon, IconButton, IconButtonProps, LightMode } from '@chakra-ui/react'
+import { Icon, IconButton, LightMode } from '@chakra-ui/react'
 import { FiHeart } from 'react-icons/fi'
+import { MovieProps } from 'src/types/MovieTypes'
+import { useFavorites } from '@context/Favorites'
 
-export const FavouriteButton = (props: IconButtonProps) => (
-  <LightMode>
-    <IconButton
-      isRound
-      bg="white"
-      color="gray.900"
-      size="sm"
-      _hover={{ transform: 'scale(1.1)' }}
-      sx={{ ':hover > svg': { transform: 'scale(1.1)' } }}
-      transition="all 0.15s ease"
-      icon={<Icon as={FiHeart} transition="all 0.15s ease" />}
-      boxShadow="base"
-      {...props}
-    />
-  </LightMode>
-)
+interface FavouriteButtonProps {
+  movie: MovieProps[]
+}
+
+export const FavouriteButton = ({ movie }: FavouriteButtonProps) => {
+  const { handleAddMovieToFavorites, handleRemoveMovieFromFavorites, filteredFavoritestMoviesID, } = useFavorites()
+
+  const isMovieOnFavorites = filteredFavoritestMoviesID.includes(movie.id)
+  return (
+    <LightMode>
+      <IconButton
+        isRound
+        bg="white"
+        color="gray.900"
+        size="sm"
+        _hover={{ transform: 'scale(1.1)' }}
+        sx={{ ':hover > svg': { transform: 'scale(1.1)' } }}
+        transition="all 0.15s ease"
+        icon={<Icon as={FiHeart} transition="all 0.15s ease" />}
+        boxShadow="base"
+        aria-label={`Add ${movie.title} to your favourites`}
+        position="absolute"
+        top="4"
+        right="4"
+        onClick={isMovieOnFavorites ? () => handleRemoveMovieFromFavorites(movie.id) : () => handleAddMovieToFavorites(movie)}
+      />
+    </LightMode>
+  )
+}

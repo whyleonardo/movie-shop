@@ -1,20 +1,12 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { ReactNode, createContext, useContext, useEffect, useState } from 'react'
 import { MovieProps } from 'src/types/MovieTypes'
 import { useToast } from '@chakra-ui/react'
 
-interface FavoritesMoviesProps {
-  title: string
-  id: string
-  poster_path: string
-}
-
 interface FavoritesProps {
-  moviesCart: MovieProps[]
-  setMoviesCart: any
-  handleAddMovieToCart: any
-  handleDeleteMovieFromCart: any
-  filteredCartMoviesID: any
-  handleClearAllCart: any
+  favoriteMovies: MovieProps[]
+  handleAddMovieToFavorites: (movie: MovieProps) => void
+  handleRemoveMovieFromFavorites: (arg0: number) => void
+  filteredFavoritestMoviesID: Array<number>
 }
 
 const FavoritesContext = createContext<FavoritesProps>({} as FavoritesProps)
@@ -23,41 +15,39 @@ export const useFavorites = () => {
   return useContext(FavoritesContext)
 }
 
-export const FavoritesProvider = ({ children }: any) => {
-  const [favoriteMovies, setFavoriteMovies] = useState<FavoritesMoviesProps[]>([])
-  const [avoidFavoritesLocalStorage, setAvoidFavoritesLocalStorage] = useState(true)
+interface FavoritesProviderProps {
+  children: ReactNode
+}
+
+export const FavoritesProvider = ({ children }: FavoritesProviderProps) => {
+  const [favoriteMovies, setFavoriteMovies] = useState<MovieProps[]>([])
+  // const [avoidFavoritesLocalStorage, setAvoidFavoritesLocalStorage] = useState(true)
 
   const toast = useToast({
     duration: 2000,
     isClosable: true,
     position: 'bottom',
-
   })
 
-  const filteredFavoritestMoviesID = favoriteMovies.map((movie: FavoritesMoviesProps) => movie.id)
+  const filteredFavoritestMoviesID = favoriteMovies.map((movie: MovieProps) => movie.id)
 
-  const handleAddMovieToFavorites = ({ id, title, poster_path }: FavoritesMoviesProps) => {
-    setAvoidFavoritesLocalStorage(false)
-    filteredFavoritestMoviesID.includes(id) == false &&
-      popularMovies.filter((movie: FavoritesProps) => movie.id !== id &&
-        setFavoriteMovies([...favoriteMovies,
-        {
-          id: id,
-          title: title,
-          poster_path: poster_path
-        }
-        ]))
+  const handleAddMovieToFavorites = (movie: MovieProps) => {
+    // setAvoidFavoritesLocalStorage(false)
+    if (!filteredFavoritestMoviesID.includes(movie.id)) {
+      setFavoriteMovies([...favoriteMovies, movie])
+    }
+
     toast({
       title: 'Filme adicionado aos favoritos!',
-      status: 'success',
-
+      status: 'success'
     })
   }
 
-  const handleDeleteMovieFromFavorites = ({ id }: FavoritesProps) => {
-    setAvoidFavoritesLocalStorage(false)
-    const removeMovieFromCart = favoriteMovies.map((movie: FavoritesProps) => movie).filter((movie: FavoritesProps) => movie.id !== id && movie)
+  const handleRemoveMovieFromFavorites = (id: number) => {
+    // setAvoidFavoritesLocalStorage(false)
+    const removeMovieFromCart = favoriteMovies.map((movie: MovieProps) => movie).filter((movie: MovieProps) => movie.id !== id && movie)
     setFavoriteMovies(removeMovieFromCart)
+
     toast({
       title: 'Filme removido dos favoritos!',
       status: 'info',
@@ -65,23 +55,23 @@ export const FavoritesProvider = ({ children }: any) => {
   }
 
   useEffect(() => {
-    setAvoidFavoritesLocalStorage(true)
+    // setAvoidFavoritesLocalStorage(true)
 
-    const favoriteLocalStorage = JSON.parse(localStorage.getItem('favorites') as any)
+    const favoriteLocalStorage = JSON.parse(localStorage.getItem('favorites') as string)
     favoriteLocalStorage !== null && setFavoriteMovies(favoriteLocalStorage)
   }, [])
 
   useEffect(() => {
+    // avoidFavoritesLocalStorage === false &&
 
-    avoidFavoritesLocalStorage === false &&
-      localStorage.setItem('favorites', JSON.stringify(favoriteMovies))
-  }, [avoidFavoritesLocalStorage, favoriteMovies])
+    localStorage.setItem('favorites', JSON.stringify(favoriteMovies))
+  }, [favoriteMovies])
 
   const values = {
     favoriteMovies,
     setFavoriteMovies,
     handleAddMovieToFavorites,
-    handleDeleteMovieFromFavorites,
+    handleRemoveMovieFromFavorites,
     filteredFavoritestMoviesID,
   }
 

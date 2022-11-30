@@ -22,7 +22,7 @@ interface CartProviderProps {
 
 export const CartProvider = ({ children }: CartProviderProps) => {
   const [moviesCart, setMoviesCart] = useState<MovieProps[]>([])
-  const [avoidCartLocalStorage, setAvoidCartLocalStorage] = useState(true)
+  // const [avoidCartLocalStorage, setAvoidCartLocalStorage] = useState(true)
 
   const toast = useToast({
     duration: 2000,

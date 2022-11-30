@@ -19,6 +19,7 @@ import { MovieProps } from 'src/types/MovieTypes'
 import { PriceTag } from '@components/Brand/PriceTag'
 import { Rating } from '@components/Brand/Rating'
 import { useCart } from '@context/Cart'
+
 interface Props {
   movie: MovieProps
   rootProps?: StackProps
@@ -33,7 +34,6 @@ export const MovieCard = (props: Props) => {
   const { title, poster_path, id, vote_average, vote_count } = movie
 
   const { handleAddMovieToCart, handleRemoveMovieFromCart, filteredCartMoviesID } = useCart()
-
   const isMovieOnCart = filteredCartMoviesID.includes(id)
 
   const resumedName = title.length > 27 ? `${title.slice(0, 27).trim()}...` : title
@@ -53,12 +53,7 @@ export const MovieCard = (props: Props) => {
             transition='350ms ease'
           />
         </AspectRatio>
-        <FavouriteButton
-          position="absolute"
-          top="4"
-          right="4"
-          aria-label={`Add ${title} to your favourites`}
-        />
+        <FavouriteButton movie={movie} />
       </Box>
       <Stack>
         <Stack spacing="1">
@@ -75,7 +70,11 @@ export const MovieCard = (props: Props) => {
         </HStack>
       </Stack>
       <Stack align="center">
-        <Button onClick={isMovieOnCart ? () => handleRemoveMovieFromCart(id) : () => handleAddMovieToCart(props.movie)} colorScheme="blue" width="full">
+        <Button
+          onClick={isMovieOnCart ? () => handleRemoveMovieFromCart(id) : () => handleAddMovieToCart(props.movie)}
+          colorScheme="blue"
+          width="full"
+        >
           {isMovieOnCart ? 'Remove from cart' : 'Add to cart'}
         </Button>
         <LinkChakra
