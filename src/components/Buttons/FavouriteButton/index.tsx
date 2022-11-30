@@ -4,7 +4,7 @@ import { MovieProps } from 'src/types/MovieTypes'
 import { useFavorites } from '@context/Favorites'
 
 interface FavouriteButtonProps {
-  movie: MovieProps[]
+  movie: MovieProps
 }
 
 export const FavouriteButton = ({ movie }: FavouriteButtonProps) => {
