@@ -7,9 +7,9 @@ export const MovieGrid = (props: SimpleGridProps) => {
     const count = React.Children.toArray(props.children).filter(React.isValidElement).length
     return {
       base: Math.min(1, count),
-      md: Math.min(3, count),
-      lg: Math.min(4, count),
-      xl: Math.min(4, count),
+      md: Math.min(4, 4),
+      lg: Math.min(4, 4),
+      xl: Math.min(4, 4),
     }
   }, [props.children])
 

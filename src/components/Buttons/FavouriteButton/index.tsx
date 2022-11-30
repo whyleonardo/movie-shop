@@ -9,7 +9,8 @@ interface FavouriteButtonProps {
 }
 
 export const FavouriteButton = ({ movie }: FavouriteButtonProps) => {
-  const { handleAddMovieToFavorites, handleRemoveMovieFromFavorites, filteredFavoritestMoviesID, } = useFavorites()
+  const { handleAddMovieToFavorites, handleRemoveMovieFromFavorites, filteredFavoritestMoviesID } =
+    useFavorites()
 
   const isMovieOnFavorites = filteredFavoritestMoviesID.includes(movie.id)
   return (
@@ -28,7 +29,11 @@ export const FavouriteButton = ({ movie }: FavouriteButtonProps) => {
         position='absolute'
         top='4'
         right='4'
-        onClick={isMovieOnFavorites ? () => handleRemoveMovieFromFavorites(movie.id) : () => handleAddMovieToFavorites(movie)}
+        onClick={
+          isMovieOnFavorites
+            ? () => handleRemoveMovieFromFavorites(movie.id)
+            : () => handleAddMovieToFavorites(movie)
+        }
       />
     </LightMode>
   )
