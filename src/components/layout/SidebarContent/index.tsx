@@ -1,14 +1,35 @@
 import { Box, BoxProps, CloseButton, Flex, useColorModeValue } from '@chakra-ui/react'
+import { FaCalendar, FaChartLine, FaHeart, FaHome, FaShoppingCart, FaStar } from 'react-icons/fa'
 import { ColorModeSwitch } from '@components/ColorModeSwitch'
-import { LinkItems } from '@utils/LinkItems'
+import { IconType } from 'react-icons'
+// import { LinkItems } from '@utils/LinkItems'
 import { Logo } from '@components/Brand/Logo'
 import { NavItem } from '@components/layout/NavItem'
+import { useCart } from '@context/Cart'
 
 interface SidebarProps extends BoxProps {
   onClose: () => void
 }
 
+interface LinkItemProps {
+  name: string
+  icon: IconType
+  path: string
+  itemsLength?: number
+}
+
 export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+  const { moviesCart } = useCart()
+
+  const LinkItems: Array<LinkItemProps> = [
+    { name: 'Home', icon: FaHome, path: '/' },
+    { name: 'Popular', icon: FaChartLine, path: '/popular' },
+    { name: 'Top Rated', icon: FaStar, path: '/top-rated' },
+    { name: 'Upcoming', icon: FaCalendar, path: '/upcoming' },
+    { name: 'Favorites', icon: FaHeart, path: '/favorites', itemsLength: 2 },
+    { name: 'Cart', icon: FaShoppingCart, path: '/cart', itemsLength: moviesCart.length },
+  ]
+
   return (
     <Box
       display='flex'
@@ -34,7 +55,7 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       </Flex>
 
       {LinkItems.map((link) => (
-        <NavItem key={link.name} path={link.path} onClose={onClose} icon={link.icon}>
+        <NavItem key={link.name} path={link.path} onClose={onClose} icon={link.icon} itemsLength={link.itemsLength}>
           {link.name}
         </NavItem>
       ))}

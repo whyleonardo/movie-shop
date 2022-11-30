@@ -1,15 +1,15 @@
-import { Flex, FlexProps, Icon, Link } from '@chakra-ui/react'
+import { Circle, Flex, FlexProps, Icon, Link } from '@chakra-ui/react'
 import { Link as RouterLink, useLocation } from 'react-router-dom'
 import { IconType } from 'react-icons'
-
 
 interface NavItemProps extends FlexProps {
   icon: IconType
   path: string
   onClose: () => void
+  itemsLength: number | undefined
 }
 
-export const NavItem = ({ icon, children, path, onClose, ...rest }: NavItemProps) => {
+export const NavItem = ({ icon, children, path, onClose, itemsLength, ...rest }: NavItemProps) => {
   const { pathname } = useLocation()
   return (
     <Link as={RouterLink} onClick={onClose} to={path} style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
@@ -26,8 +26,9 @@ export const NavItem = ({ icon, children, path, onClose, ...rest }: NavItemProps
           bg: 'blue.500',
           color: 'white',
         }}
+        justifyContent='space-between'
         {...rest}>
-        {icon && (
+        <Flex alignItems='center'>
           <Icon
             mr='4'
             fontSize='16'
@@ -36,8 +37,11 @@ export const NavItem = ({ icon, children, path, onClose, ...rest }: NavItemProps
             }}
             as={icon}
           />
-        )}
-        {children}
+
+          {children}
+        </Flex>
+
+        {itemsLength && <Circle size='1.5rem' bg='red.500'>{itemsLength}</Circle>}
       </Flex>
     </Link >
   )
