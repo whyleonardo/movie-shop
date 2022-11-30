@@ -1,5 +1,5 @@
-import { Dispatch, ReactNode, createContext, useContext, useEffect, useState } from 'react'
-import { MovieProps } from 'src/types/movieTypes'
+import { Dispatch, ReactNode, createContext, useContext, useState } from 'react'
+import { MovieProps } from 'src/types/MovieTypes'
 
 interface MoviesContextProps {
   popularMovies: MovieProps[]
