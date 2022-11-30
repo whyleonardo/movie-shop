@@ -8,7 +8,3 @@ export type MovieProps = {
   vote_average: number
   vote_count: number
 }
-
-// export type PopularMoviesProps = {
-
-// }

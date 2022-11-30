@@ -1,5 +1,5 @@
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react'
-import { MovieProps } from 'src/types/movieTypes'
+import { MovieProps } from 'src/types/MovieTypes'
 import { useToast } from '@chakra-ui/react'
 
 interface CartProps {

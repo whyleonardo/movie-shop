@@ -1,6 +1,6 @@
 import { MovieCard } from '@components/Cards/MovieCard'
 import { MovieGrid } from '@components/layout/MovieGrid'
-import { MovieProps } from 'src/types/movieTypes'
+import { MovieProps } from 'src/types/MovieTypes'
 import { Paginator } from '@components/Buttons/Paginator/'
 import { api } from '@data/api'
 import { useState } from 'react'

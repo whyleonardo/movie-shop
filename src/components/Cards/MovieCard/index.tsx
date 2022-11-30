@@ -15,7 +15,7 @@ import {
 
 import { FavouriteButton } from '@components/Buttons/FavouriteButton'
 import { Link } from 'react-router-dom'
-import { MovieProps } from 'src/types/movieTypes'
+import { MovieProps } from 'src/types/MovieTypes'
 import { PriceTag } from '@components/Brand/PriceTag'
 import { Rating } from '@components/Brand/Rating'
 import { useCart } from '@context/Cart'
