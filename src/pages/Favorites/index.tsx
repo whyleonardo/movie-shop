@@ -65,7 +65,11 @@ export const Favorites = () => {
           <MovieCard key={movie.id} movie={movie} />
         ))}
 
-        {!favoriteMovies.length && <Text alignSelf='center'>You not added any movie here! ☹️</Text>}
+        {!favoriteMovies.length && (
+          <Text fontWeight='bold' alignSelf='center'>
+            You not added any movie here! ☹️
+          </Text>
+        )}
       </Grid>
     </Stack>
   )

@@ -65,7 +65,11 @@ export const Cart = () => {
           <MovieCard key={movie.id} movie={movie} />
         ))}
 
-        {!moviesCart.length && <Text alignSelf='center'>You not added any movie here! ☹️</Text>}
+        {!moviesCart.length && (
+          <Text fontWeight='bold' alignSelf='center'>
+            You not added any movie here! ☹️
+          </Text>
+        )}
       </Grid>
     </Stack>
   )
