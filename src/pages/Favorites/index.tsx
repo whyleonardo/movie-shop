@@ -56,11 +56,16 @@ export const Favorites = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
+        display={!favoriteMovies.length ? 'flex' : 'grid'}
+        justifyContent='center'
+        h={!favoriteMovies.length ? '55vh' : 'none'}
       >
         {/* @ts-ignore */}
         {favoriteMovies.sort(sortMethods[sortState].method).map((movie: MovieProps) => (
           <MovieCard key={movie.id} movie={movie} />
         ))}
+
+        {!favoriteMovies.length && <Text alignSelf='center'>You not added any movie here! ☹️</Text>}
       </Grid>
     </Stack>
   )
