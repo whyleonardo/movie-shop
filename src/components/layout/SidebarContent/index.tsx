@@ -5,6 +5,7 @@ import { IconType } from 'react-icons'
 // import { LinkItems } from '@utils/LinkItems'
 import { Logo } from '@components/Brand/Logo'
 import { NavItem } from '@components/layout/NavItem'
+import { SearchBar } from '@components/layout/SearchBar'
 import { useCart } from '@context/Cart'
 import { useFavorites } from '@context/Favorites'
 
@@ -22,7 +23,6 @@ interface LinkItemProps {
 export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   const { moviesCart } = useCart()
   const { favoriteMovies } = useFavorites()
-
 
   const LinkItems: Array<LinkItemProps> = [
     { name: 'Home', icon: FaHome, path: '/' },
@@ -57,8 +57,16 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         </Flex>
       </Flex>
 
+      <SearchBar />
+
       {LinkItems.map((link) => (
-        <NavItem key={link.name} path={link.path} onClose={onClose} icon={link.icon} itemsLength={link.itemsLength}>
+        <NavItem
+          key={link.name}
+          path={link.path}
+          onClose={onClose}
+          icon={link.icon}
+          itemsLength={link.itemsLength}
+        >
           {link.name}
         </NavItem>
       ))}

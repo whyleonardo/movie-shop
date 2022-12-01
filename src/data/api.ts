@@ -6,7 +6,6 @@ export const api = {
   topRated: `${import.meta.env.VITE_URL_TOPRATED_MOVIES}`,
   latest: `${import.meta.env.VITE_URL_LATEST_MOVIES}`,
   singleMovie: `${import.meta.env.VITE_URL_GET_MOVIE}`,
-  nowPlaying: import.meta.env.VITE_URL_NOW_PLAYING,
-
-  search: `${import.meta.env.VITE_SEARCH}`,
+  nowPlaying: `${import.meta.env.VITE_URL_NOW_PLAYING}`,
+  search: `${import.meta.env.VITE_URL_SEARCH_MOVIE}`,
 }
