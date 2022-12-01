@@ -27,8 +27,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   const toast = useToast({
     duration: 2000,
     isClosable: true,
-    position: 'bottom',
-
+    position: 'top',
   })
 
   const filteredCartMoviesID = moviesCart.map((movie: MovieProps) => movie.id)
@@ -40,19 +39,20 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     }
 
     toast({
-      title: 'Filme adicionado ao carrinho!',
-      status: 'success'
+      title: 'Movie added to cart!',
+      status: 'success',
     })
-
   }
 
   const handleRemoveMovieFromCart = (id: number) => {
     // setAvoidCartLocalStorage(false)
-    const removeMovieFromCart = moviesCart.map((movie: MovieProps) => movie).filter((movie: MovieProps) => movie.id !== id && movie)
+    const removeMovieFromCart = moviesCart
+      .map((movie: MovieProps) => movie)
+      .filter((movie: MovieProps) => movie.id !== id && movie)
     setMoviesCart(removeMovieFromCart)
 
     toast({
-      title: 'Filme removido do carrinho!',
+      title: 'Movie removed from cart!',
       status: 'info',
     })
   }
@@ -71,21 +71,15 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   useEffect(() => {
     // avoidCartLocalStorage === false &&
     localStorage.setItem('cart', JSON.stringify(moviesCart))
-
   }, [moviesCart])
-
 
   const values = {
     moviesCart,
     handleAddMovieToCart,
     handleRemoveMovieFromCart,
     handleClearAllCart,
-    filteredCartMoviesID
+    filteredCartMoviesID,
   }
 
-  return (
-    <CartContext.Provider value={values}>
-      {children}
-    </CartContext.Provider>
-  )
+  return <CartContext.Provider value={values}>{children}</CartContext.Provider>
 }

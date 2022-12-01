@@ -26,7 +26,7 @@ export const FavoritesProvider = ({ children }: FavoritesProviderProps) => {
   const toast = useToast({
     duration: 2000,
     isClosable: true,
-    position: 'bottom',
+    position: 'top',
   })
 
   const filteredFavoritestMoviesID = favoriteMovies.map((movie: MovieProps) => movie.id)
@@ -38,18 +38,20 @@ export const FavoritesProvider = ({ children }: FavoritesProviderProps) => {
     }
 
     toast({
-      title: 'Filme adicionado aos favoritos!',
-      status: 'success'
+      title: 'Movie added to favorites!',
+      status: 'success',
     })
   }
 
   const handleRemoveMovieFromFavorites = (id: number) => {
     // setAvoidFavoritesLocalStorage(false)
-    const removeMovieFromCart = favoriteMovies.map((movie: MovieProps) => movie).filter((movie: MovieProps) => movie.id !== id && movie)
+    const removeMovieFromCart = favoriteMovies
+      .map((movie: MovieProps) => movie)
+      .filter((movie: MovieProps) => movie.id !== id && movie)
     setFavoriteMovies(removeMovieFromCart)
 
     toast({
-      title: 'Filme removido dos favoritos!',
+      title: 'Movie removed from favorites!',
       status: 'info',
     })
   }
@@ -75,9 +77,5 @@ export const FavoritesProvider = ({ children }: FavoritesProviderProps) => {
     filteredFavoritestMoviesID,
   }
 
-  return (
-    <FavoritesContext.Provider value={values}>
-      {children}
-    </FavoritesContext.Provider>
-  )
+  return <FavoritesContext.Provider value={values}>{children}</FavoritesContext.Provider>
 }
