@@ -23,7 +23,7 @@ export const Cart = () => {
       justifyContent={!moviesCart.length ? 'center' : 'none'}
       px={{ md: '5rem' }}
     >
-      <Heading>Items</Heading>
+      {moviesCart.length && <Heading>Items</Heading>}
 
       {moviesCart.map((movie: MovieProps) => (
         <MovieCardCart key={movie.id} movie={movie}>
