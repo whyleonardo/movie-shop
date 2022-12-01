@@ -6,13 +6,19 @@ interface NavItemProps extends FlexProps {
   icon: IconType
   path: string
   onClose: () => void
-  itemsLength: number | undefined
+  itemsLength: number
 }
 
 export const NavItem = ({ icon, children, path, onClose, itemsLength, ...rest }: NavItemProps) => {
   const { pathname } = useLocation()
   return (
-    <Link as={RouterLink} onClick={onClose} to={path} style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
+    <Link
+      as={RouterLink}
+      onClick={onClose}
+      to={path}
+      style={{ textDecoration: 'none' }}
+      _focus={{ boxShadow: 'none' }}
+    >
       <Flex
         align='center'
         p='4'
@@ -27,7 +33,8 @@ export const NavItem = ({ icon, children, path, onClose, itemsLength, ...rest }:
           color: 'white',
         }}
         justifyContent='space-between'
-        {...rest}>
+        {...rest}
+      >
         <Flex alignItems='center'>
           <Icon
             mr='4'
@@ -41,8 +48,12 @@ export const NavItem = ({ icon, children, path, onClose, itemsLength, ...rest }:
           {children}
         </Flex>
 
-        {itemsLength !== undefined && <Circle size='1.5rem' bg='red.500'>{itemsLength}</Circle>}
+        {itemsLength > 0 && (
+          <Circle size='1.5rem' bg='red.500'>
+            {itemsLength}
+          </Circle>
+        )}
       </Flex>
-    </Link >
+    </Link>
   )
 }
