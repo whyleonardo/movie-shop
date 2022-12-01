@@ -57,7 +57,7 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         </Flex>
       </Flex>
 
-      <SearchBar />
+      <SearchBar closeMenu={onClose} />
 
       {LinkItems.map((link) => (
         <NavItem
