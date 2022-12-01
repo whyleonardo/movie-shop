@@ -55,7 +55,7 @@ export const SearchBar = ({ closeMenu }: SearchBarProps) => {
   }
 
   useEffect(() => {
-    if (data && data.results.length > 4) {
+    if (data && data?.results?.length > 4) {
       data.results.length = 5
       setSearchedMovies(data.results)
     }
