@@ -1,4 +1,4 @@
-import { Grid, Select, Stack, Text, VStack } from '@chakra-ui/react'
+import { Grid, HStack, Select, Stack, Text } from '@chakra-ui/react'
 import { RefObject, useState } from 'react'
 import { MovieCard } from '@components/Cards/MovieCard'
 import { MovieProps } from 'src/types/MovieTypes'
@@ -34,8 +34,8 @@ export const Favorites = () => {
   }
 
   return (
-    <Stack alignItems='normal' gap='1.5rem'>
-      <VStack alignSelf='end' alignItems='start'>
+    <Stack alignItems='normal' gap='0.5rem'>
+      <HStack alignSelf='end' alignItems='center'>
         <Text fontWeight='bold'>SortBy:</Text>
 
         <Select w='10rem' defaultValue={'DEFAULT'} onChange={(e) => setSortState(e.target.value)}>
@@ -45,7 +45,7 @@ export const Favorites = () => {
           <option value='ascending'>Ascending</option>
           <option value='descending'>Descending</option>
         </Select>
-      </VStack>
+      </HStack>
 
       <Grid
         templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(4, 1fr)' }}
@@ -60,7 +60,6 @@ export const Favorites = () => {
         justifyContent='center'
         h={!favoriteMovies.length ? '55vh' : 'none'}
       >
-        {/* @ts-ignore */}
         {favoriteMovies.sort(sortMethods[sortState].method).map((movie: MovieProps) => (
           <MovieCard key={movie.id} movie={movie} />
         ))}

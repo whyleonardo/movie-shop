@@ -26,7 +26,7 @@ interface Props {
 }
 
 const api = {
-  imageURL: import.meta.env.VITE_URL_IMAGE
+  imageURL: import.meta.env.VITE_URL_IMAGE,
 }
 
 export const MovieCard = (props: Props) => {
@@ -39,13 +39,13 @@ export const MovieCard = (props: Props) => {
   const resumedName = title.length > 27 ? `${title.slice(0, 27).trim()}...` : title
 
   return (
-    <Stack spacing={useBreakpointValue({ base: '4', md: '5' })} {...rootProps} role='group' >
-      <Box position="relative">
+    <Stack spacing={useBreakpointValue({ base: '4', md: '5' })} {...rootProps} role='group'>
+      <Box position='relative'>
         <AspectRatio ratio={12 / 16}>
           <Image
             src={api.imageURL + poster_path}
             alt={title}
-            draggable="false"
+            draggable='false'
             fallback={<Skeleton rounded={useBreakpointValue({ base: 'md', md: 'xl' })} />}
             borderRadius={useBreakpointValue({ base: 'md', md: 'xl' })}
             transform='auto'
@@ -56,32 +56,41 @@ export const MovieCard = (props: Props) => {
         <FavouriteButton movie={movie} />
       </Box>
       <Stack>
-        <Stack spacing="1">
-          <Text fontWeight="medium" color={useColorModeValue('gray.700', 'gray.400')}>
+        <Stack spacing='1'>
+          <Text fontWeight='medium' color={useColorModeValue('gray.700', 'gray.400')}>
             {resumedName}
           </Text>
-          <PriceTag price={19.99} salePrice={9.99} currency="USD" />
+          <PriceTag price={19.99} salePrice={9.99} currency='USD' />
         </Stack>
         <HStack>
-          <Rating defaultValue={Math.floor(vote_average / 2)} size="sm" />
-          <Text fontSize="sm" color={useColorModeValue('gray.600', 'gray.400')}>
+          <Rating defaultValue={Math.floor(vote_average / 2)} size='sm' />
+          <Text fontSize='sm' color={useColorModeValue('gray.600', 'gray.400')}>
             {vote_count} votes
           </Text>
         </HStack>
       </Stack>
-      <Stack align="center">
+      <Stack align='center'>
         <Button
-          onClick={isMovieOnCart ? () => handleRemoveMovieFromCart(id) : () => handleAddMovieToCart(props.movie)}
-          colorScheme="blue"
-          width="full"
+          onClick={
+            isMovieOnCart
+              ? () => handleRemoveMovieFromCart(id)
+              : () => handleAddMovieToCart(props.movie)
+          }
+          colorScheme='blue'
+          width='full'
+          filter='auto'
+          _hover={{ brightness: 1.2 }}
+          _active={{ brightness: 0.9 }}
+          transition='300ms ease all'
+          bg={isMovieOnCart ? 'red.500' : 'blue.500'}
         >
           {isMovieOnCart ? 'Remove from cart' : 'Add to cart'}
         </Button>
         <LinkChakra
           as={Link}
           to={`/movie/${id}`}
-          textDecoration="underline"
-          fontWeight="medium"
+          textDecoration='underline'
+          fontWeight='medium'
           color={useColorModeValue('gray.600', 'gray.400')}
           _hover={{ color: 'yellow.500' }}
         >
