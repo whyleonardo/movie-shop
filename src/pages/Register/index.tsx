@@ -1,9 +1,10 @@
 import {
   Box,
   Button,
-  Link as ChakraLink,
   Container,
   FormControl,
+  FormErrorMessage,
+  FormHelperText,
   FormLabel,
   HStack,
   Heading,
@@ -12,8 +13,10 @@ import {
   Text,
   useBreakpointValue,
   useColorModeValue,
+  useToast,
 } from '@chakra-ui/react'
 
+import { Link, useNavigate } from 'react-router-dom'
 import { Logo } from '@components/Brand/Logo'
 import { PasswordField } from '@components/Inputs/PasswordField'
 import { getAuth } from 'firebase/auth'
@@ -32,19 +35,34 @@ export const Register = () => {
     password: '',
     username: '',
   })
+
   const handleChangeRegisterInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRegisterInfo({
       ...registerInfo,
       [e.target.name]: e.target.value,
     })
   }
+
   const { currentUser } = getAuth()
+
+  const toast = useToast()
+  const navigate = useNavigate()
+  const { email, username } = registerInfo
 
   const handleRegisterUser = async () => {
     try {
       await handleRegisterUserWithEmailAndPassword(registerInfo)
     } catch (error) {
-      console.log(error)
+      toast({
+        description: error.message,
+        status: 'error',
+        isClosable: true,
+        position: 'top-left',
+      })
+    } finally {
+      if (currentUser) {
+        navigate('/')
+      }
     }
   }
 
@@ -63,7 +81,7 @@ export const Register = () => {
             <Heading size='lg'>Register a new account</Heading>
             <HStack spacing='1' justify='center'>
               <Text color='muted'>Have an account?</Text>
-              <Button variant='link' colorScheme='blue'>
+              <Button variant='link' as={Link} to='/login' colorScheme='blue'>
                 Sign in
               </Button>
             </HStack>
@@ -87,7 +105,11 @@ export const Register = () => {
                     type='email'
                     onChange={handleChangeRegisterInfo}
                     value={registerInfo.email}
+                    isInvalid={email == ''}
+                    isRequired
+                    blur={{ bg: 'red ' }}
                   />
+
                   <FormLabel htmlFor='username'>Username</FormLabel>
                   <Input
                     name='username'
@@ -95,6 +117,8 @@ export const Register = () => {
                     type='text'
                     onChange={handleChangeRegisterInfo}
                     value={registerInfo.username}
+                    isInvalid={username == ''}
+                    isRequired
                   />
                 </Stack>
               </FormControl>
@@ -103,12 +127,19 @@ export const Register = () => {
                 id='password'
                 onChange={handleChangeRegisterInfo}
                 value={registerInfo.password}
+                isRequired
               />
             </Stack>
 
             <HStack justify='space-between'></HStack>
             <Stack spacing='6'>
-              <Button onClick={handleRegisterUser} variant='primary' bg='blue.500' color='white'>
+              <Button
+                disabled={email == '' && username == ''}
+                onClick={handleRegisterUser}
+                variant='primary'
+                bg='blue.500'
+                color='white'
+              >
                 Register
               </Button>
             </Stack>

@@ -1,18 +1,35 @@
-import { Avatar, Box, Flex, FlexProps, HStack, IconButton, Menu, MenuButton, MenuDivider, MenuItem, MenuList, Text, VStack, useColorModeValue } from '@chakra-ui/react'
+import {
+  Avatar,
+  Box,
+  Flex,
+  FlexProps,
+  HStack,
+  IconButton,
+  Menu,
+  MenuButton,
+  MenuDivider,
+  MenuItem,
+  MenuList,
+  Text,
+  VStack,
+  useColorModeValue,
+} from '@chakra-ui/react'
 import { FaBars, FaChevronDown } from 'react-icons/fa'
+import { getAuth, signOut } from 'firebase/auth'
 import { BackPreviousPage } from '@components/Buttons/BackPreviousPage'
 import { ColorModeSwitch } from '@components/ColorModeSwitch'
 import { Logo } from '@components/Brand/Logo'
 import { useLocation } from 'react-router-dom'
 
-
 interface MobileProps extends FlexProps {
   onOpen: () => void
 }
+
 export const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   const { pathname } = useLocation()
   const isMovieDetailsLocation = pathname.includes('/movie')
 
+  const auth = getAuth()
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -23,33 +40,32 @@ export const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       bg={useColorModeValue('white', 'gray.900')}
       borderBottomWidth='1px'
       borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
-      justifyContent={isMovieDetailsLocation ? 'space-between' : { base: 'space-between', md: 'flex-end' }}
-      {...rest}>
-
-      {isMovieDetailsLocation
-        ? <BackPreviousPage />
-        : <IconButton
+      justifyContent={
+        isMovieDetailsLocation ? 'space-between' : { base: 'space-between', md: 'flex-end' }
+      }
+      {...rest}
+    >
+      {isMovieDetailsLocation ? (
+        <BackPreviousPage />
+      ) : (
+        <IconButton
           display={{ base: 'flex', md: 'none' }}
           onClick={onOpen}
           variant='outline'
           aria-label='open menu'
           icon={<FaBars />}
         />
-      }
+      )}
 
       <Logo display={{ base: 'flex', md: 'none' }} />
 
       <Flex gap='2rem' alignItems='center'>
-
         <ColorModeSwitch display={{ base: 'none', md: 'flex' }} />
 
         <HStack spacing={{ base: '0', md: '6' }}>
           <Flex alignItems={'center'}>
             <Menu>
-              <MenuButton
-                py={2}
-                transition='all 0.3s'
-                _focus={{ boxShadow: 'none' }}>
+              <MenuButton py={2} transition='all 0.3s' _focus={{ boxShadow: 'none' }}>
                 <HStack>
                   <Avatar
                     size={'sm'}
@@ -61,7 +77,8 @@ export const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                     display={{ base: 'none', md: 'flex' }}
                     alignItems='flex-start'
                     spacing='1px'
-                    ml='2'>
+                    ml='2'
+                  >
                     <Text fontSize='sm'>Justina Clark</Text>
                     <Text fontSize='xs' color='gray.600'>
                       Admin
@@ -74,11 +91,12 @@ export const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               </MenuButton>
               <MenuList
                 bg={useColorModeValue('white', 'gray.900')}
-                borderColor={useColorModeValue('gray.200', 'gray.700')}>
+                borderColor={useColorModeValue('gray.200', 'gray.700')}
+              >
                 <MenuItem>Profile</MenuItem>
                 <MenuItem>Settings</MenuItem>
                 <MenuDivider />
-                <MenuItem>Sign out</MenuItem>
+                <MenuItem onClick={() => signOut(auth)}>Sign out</MenuItem>
               </MenuList>
             </Menu>
           </Flex>

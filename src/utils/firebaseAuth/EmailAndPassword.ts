@@ -1,4 +1,8 @@
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from 'firebase/auth'
 import { addDoc } from 'firebase/firestore'
 import { auth } from '@services/firebase'
 import { userCollectionRef } from '@utils/firestoreCalls'
@@ -14,10 +18,8 @@ export const handleRegisterUserWithEmailAndPassword = async ({
   password,
   username,
 }: RegisterInfosProps) => {
-  await createUserWithEmailAndPassword(auth, email, password).catch((error) => {
-    const errorCode = error.code
-    const errorMessage = error.message
-  })
+  await createUserWithEmailAndPassword(auth, email, password)
+
   await updateProfile(auth.currentUser, {
     displayName: username,
   })
@@ -27,4 +29,11 @@ export const handleRegisterUserWithEmailAndPassword = async ({
     username: auth.currentUser?.displayName,
     uid: auth.currentUser?.uid,
   })
+}
+
+export const handleSignInUserWithEmailAndPassword = async ({
+  email,
+  password,
+}: RegisterInfosProps) => {
+  await createUserWithEmailAndPassword(auth, email, password)
 }
