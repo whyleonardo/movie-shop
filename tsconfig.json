@@ -25,6 +25,7 @@
       "@pages/*": ["src/pages/*"],
       "@theme/*": ["src/theme/*"],
       "@types/*": ["src/types/*"],
+      "@services/*": ["src/services/*"],
       "@utils/*": ["src/utils/*"]
       // "@[folder name]/*": ["src/[folder name]/*"]
     }

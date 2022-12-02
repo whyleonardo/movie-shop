@@ -7,6 +7,7 @@ import { Login } from '@pages/Login'
 import { Movie } from '@pages/Movie'
 import { MoviesProvider } from '@context/Movies'
 import { PopularMovies } from '@pages/PopularMovies'
+import { Register } from '@pages/Register'
 import { SidebarWithHeader } from '@components/layout/SidebarWithHeader'
 import { TopRatedMovies } from '@pages/TopRatedMovies'
 import { UpcomingMovies } from '@pages/UpcomingMovies'
@@ -19,6 +20,7 @@ export const App = () => {
           <BrowserRouter>
             <Routes>
               <Route path='/login' element={<Login />} />
+              <Route path='/register' element={<Register />} />
               <Route path='/' element={<SidebarWithHeader />}>
                 <Route path='/movie/:id' element={<Movie />} />
                 <Route path='/popular' element={<PopularMovies />} />
@@ -29,7 +31,6 @@ export const App = () => {
               </Route>
             </Routes>
           </BrowserRouter>
-
         </FavoritesProvider>
       </CartProvider>
     </MoviesProvider>
