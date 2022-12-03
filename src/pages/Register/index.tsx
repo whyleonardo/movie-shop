@@ -1,10 +1,10 @@
+import * as Yup from 'yup'
 import {
   Box,
   Button,
   Container,
   FormControl,
   FormErrorMessage,
-  FormHelperText,
   FormLabel,
   HStack,
   Heading,
@@ -15,56 +15,54 @@ import {
   useColorModeValue,
   useToast,
 } from '@chakra-ui/react'
-
 import { Link, useNavigate } from 'react-router-dom'
+
 import { Logo } from '@components/Brand/Logo'
 import { PasswordField } from '@components/Inputs/PasswordField'
 import { getAuth } from 'firebase/auth'
 import { handleRegisterUserWithEmailAndPassword } from '@utils/firebaseAuth/EmailAndPassword'
-import { useState } from 'react'
+import { useEffect } from 'react'
+import { useFormik } from 'formik'
 
-export interface RegisterInfoProps {
-  email: string
-  password: string
-  username: string
-}
+const registerSchema = Yup.object({
+  email: Yup.string().email('Invalid email address').required('Required'),
+  username: Yup.string().max(15, 'Must be 15 characters or less').required('Required'),
+  password: Yup.string().min(8, 'Must be 8 characters or more').required('Required'),
+})
 
 export const Register = () => {
-  const [registerInfo, setRegisterInfo] = useState<RegisterInfoProps>({
-    email: '',
-    password: '',
-    username: '',
-  })
-
-  const handleChangeRegisterInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setRegisterInfo({
-      ...registerInfo,
-      [e.target.name]: e.target.value,
-    })
-  }
-
   const { currentUser } = getAuth()
-
   const toast = useToast()
   const navigate = useNavigate()
-  const { email, username } = registerInfo
 
-  const handleRegisterUser = async () => {
-    try {
-      await handleRegisterUserWithEmailAndPassword(registerInfo)
-    } catch (error) {
-      toast({
-        description: error.message,
-        status: 'error',
-        isClosable: true,
-        position: 'top-left',
-      })
-    } finally {
-      if (currentUser) {
-        navigate('/')
-      }
-    }
-  }
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      username: '',
+      password: '',
+    },
+    validateOnBlur: true,
+    validationSchema: registerSchema,
+    onSubmit: (values) => {
+      handleRegisterUserWithEmailAndPassword(values)
+        .then(() => {
+          navigate('/')
+        })
+
+        .catch((error) => {
+          toast({
+            description: error.message,
+            status: 'error',
+            isClosable: true,
+            position: 'top-left',
+          })
+        })
+    },
+  })
+
+  useEffect(() => {
+    currentUser && navigate('/')
+  }, [currentUser])
 
   return (
     <Container
@@ -91,58 +89,72 @@ export const Register = () => {
           py={{ base: '0', sm: '8' }}
           px={{ base: '4', sm: '10' }}
           bg={useBreakpointValue({ base: 'transparent', sm: 'bg-surface' })}
-          boxShadow={{ base: 'none', sm: useColorModeValue('lg', 'lg') }}
+          boxShadow={{ base: 'none', sm: 'md' }}
+          border='1px'
+          borderColor={useColorModeValue('gray.100', 'gray.700')}
           borderRadius={{ base: 'none', sm: 'xl' }}
         >
           <Stack spacing='6'>
-            <Stack spacing='2'>
-              <FormControl>
-                <Stack>
-                  <FormLabel htmlFor='email'>Email</FormLabel>
-                  <Input
-                    name='email'
-                    id='email'
-                    type='email'
-                    onChange={handleChangeRegisterInfo}
-                    value={registerInfo.email}
-                    isInvalid={email == ''}
-                    isRequired
-                    blur={{ bg: 'red ' }}
-                  />
+            <form onSubmit={formik.handleSubmit}>
+              <Stack spacing='2'>
+                <FormControl isInvalid={formik.errors.email && formik.touched.email}>
+                  <Stack>
+                    <FormLabel htmlFor='email'>Email</FormLabel>
+                    <Input
+                      name='email'
+                      id='email'
+                      type='email'
+                      onChange={formik.handleChange}
+                      value={formik.values.email}
+                      onBlur={formik.handleBlur}
+                    />
+                    {formik.errors.email && (
+                      <FormErrorMessage>
+                        {formik.errors.email && formik.errors.email}
+                      </FormErrorMessage>
+                    )}
+                  </Stack>
+                </FormControl>
 
-                  <FormLabel htmlFor='username'>Username</FormLabel>
-                  <Input
-                    name='username'
-                    id='username'
-                    type='text'
-                    onChange={handleChangeRegisterInfo}
-                    value={registerInfo.username}
-                    isInvalid={username == ''}
-                    isRequired
-                  />
-                </Stack>
-              </FormControl>
-              <PasswordField
-                name='password'
-                id='password'
-                onChange={handleChangeRegisterInfo}
-                value={registerInfo.password}
-                isRequired
-              />
-            </Stack>
+                <FormControl isInvalid={formik.errors.username && formik.touched.username}>
+                  <Stack>
+                    <FormLabel htmlFor='username'>Username</FormLabel>
+                    <Input
+                      name='username'
+                      id='username'
+                      type='text'
+                      onChange={formik.handleChange}
+                      value={formik.values.username}
+                      onBlur={formik.handleBlur}
+                    />
+                    {formik.errors.username && (
+                      <FormErrorMessage>
+                        {formik.errors.username && formik.errors.username}
+                      </FormErrorMessage>
+                    )}
+                  </Stack>
+                </FormControl>
 
-            <HStack justify='space-between'></HStack>
-            <Stack spacing='6'>
-              <Button
-                disabled={email == '' && username == ''}
-                onClick={handleRegisterUser}
-                variant='primary'
-                bg='blue.500'
-                color='white'
-              >
-                Register
-              </Button>
-            </Stack>
+                <PasswordField
+                  onChange={formik.handleChange}
+                  value={formik.values.password}
+                  onBlur={formik.handleBlur}
+                  formik={formik}
+                />
+              </Stack>
+              <Stack spacing='6'>
+                <Button
+                  type='submit'
+                  disabled={!formik.isValid}
+                  variant='primary'
+                  bg='blue.500'
+                  color='white'
+                  mt='2rem'
+                >
+                  Register
+                </Button>
+              </Stack>
+            </form>
           </Stack>
         </Box>
       </Stack>

@@ -13,6 +13,8 @@ interface RegisterInfosProps {
   username: string
 }
 
+type LoginInfoProps = Omit<RegisterInfosProps, 'username'>
+
 export const handleRegisterUserWithEmailAndPassword = async ({
   email,
   password,
@@ -28,12 +30,16 @@ export const handleRegisterUserWithEmailAndPassword = async ({
     email: auth.currentUser?.email,
     username: auth.currentUser?.displayName,
     uid: auth.currentUser?.uid,
+    createdAt: new Date().toLocaleDateString('en-US', {
+      minute: '2-digit',
+      hour: '2-digit',
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric',
+    }),
   })
 }
 
-export const handleSignInUserWithEmailAndPassword = async ({
-  email,
-  password,
-}: RegisterInfosProps) => {
-  await createUserWithEmailAndPassword(auth, email, password)
+export const handleSignInUserWithEmailAndPassword = async ({ email, password }: LoginInfoProps) => {
+  await signInWithEmailAndPassword(auth, email, password)
 }
