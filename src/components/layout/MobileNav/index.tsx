@@ -84,7 +84,7 @@ export const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 
       <Logo display={{ base: 'flex', md: 'none' }} />
 
-      <Flex gap='1.5rem' mr='2rem' alignItems='center'>
+      <Flex gap='1.5rem' alignItems='center'>
         <ColorModeSwitch display={{ base: 'none', md: 'flex' }} />
 
         {user ? (
