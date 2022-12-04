@@ -22,7 +22,7 @@ import { User, getAuth, signOut } from 'firebase/auth'
 import { BackPreviousPage } from '@components/Buttons/BackPreviousPage'
 import { ColorModeSwitch } from '@components/ColorModeSwitch'
 import { Logo } from '@components/Brand/Logo'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface MobileProps extends FlexProps {
   onOpen: () => void
@@ -39,22 +39,15 @@ export const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 
   const auth = getAuth()
 
-  const authStateObserver = auth.onAuthStateChanged((user) => {
-    if (user) {
-      setUser(user)
-    }
-  })
+  console.log(auth.currentUser)
 
-  // useEffect(() => {
-  //   console.log(auth.currentUser)
-
-  //   setTimeout(() => {
-  //     console.log(auth.currentUser)
-
-  //   }, 5000)
-
-  // }, [auth.currentUser])
-
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        auth.updateCurrentUser(user).then(() => setUser(user))
+      }
+    })
+  }, [])
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -87,7 +80,7 @@ export const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       <Flex gap='1.5rem' mr='2rem' alignItems='center'>
         <ColorModeSwitch display={{ base: 'none', md: 'flex' }} />
 
-        {user ? (
+        {auth.currentUser ? (
           <HStack spacing={{ base: '0', md: '6' }}>
             <Flex alignItems={'center'}>
               <Menu>
