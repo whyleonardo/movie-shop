@@ -18,11 +18,11 @@ import {
 import { FaBars, FaChevronDown } from 'react-icons/fa'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { User, getAuth, signOut } from 'firebase/auth'
+import { useEffect, useState } from 'react'
 
 import { BackPreviousPage } from '@components/Buttons/BackPreviousPage'
 import { ColorModeSwitch } from '@components/ColorModeSwitch'
 import { Logo } from '@components/Brand/Logo'
-import { useEffect, useState } from 'react'
 
 interface MobileProps extends FlexProps {
   onOpen: () => void
@@ -38,8 +38,6 @@ export const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   const navigate = useNavigate()
 
   const auth = getAuth()
-
-  console.log(auth.currentUser)
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {

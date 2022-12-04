@@ -58,7 +58,6 @@ export const Login = () => {
         })
 
         .catch((error) => {
-          console.log({ error })
           toast({
             description: error.message,
             status: 'error',
