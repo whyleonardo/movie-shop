@@ -9,6 +9,7 @@ import {
   HStack,
   Heading,
   Input,
+  Spinner,
   Stack,
   Text,
   useBreakpointValue,
@@ -16,12 +17,12 @@ import {
   useToast,
 } from '@chakra-ui/react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
 import { Logo } from '@components/Brand/Logo'
 import { PasswordField } from '@components/Inputs/PasswordField'
 import { getAuth } from 'firebase/auth'
 import { handleRegisterUserWithEmailAndPassword } from '@utils/firebaseAuth/EmailAndPassword'
-import { useEffect } from 'react'
 import { useFormik } from 'formik'
 
 const registerSchema = Yup.object({
@@ -31,6 +32,7 @@ const registerSchema = Yup.object({
 })
 
 export const Register = () => {
+  const [buttonLoading, setButtonLoading] = useState(false)
   const { currentUser } = getAuth()
   const toast = useToast()
   const navigate = useNavigate()
@@ -46,6 +48,7 @@ export const Register = () => {
     onSubmit: (values) => {
       handleRegisterUserWithEmailAndPassword(values)
         .then(() => {
+          setButtonLoading(true)
           navigate('/')
         })
 
@@ -151,7 +154,7 @@ export const Register = () => {
                   color='white'
                   mt='2rem'
                 >
-                  Register
+                  {buttonLoading ? 'Register' : <Spinner />}
                 </Button>
               </Stack>
             </form>

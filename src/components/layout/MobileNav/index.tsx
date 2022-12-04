@@ -1,6 +1,7 @@
 import {
   Avatar,
   Box,
+  Button,
   Flex,
   FlexProps,
   HStack,
@@ -15,21 +16,45 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react'
 import { FaBars, FaChevronDown } from 'react-icons/fa'
-import { getAuth, signOut } from 'firebase/auth'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { User, getAuth, signOut } from 'firebase/auth'
+
 import { BackPreviousPage } from '@components/Buttons/BackPreviousPage'
 import { ColorModeSwitch } from '@components/ColorModeSwitch'
 import { Logo } from '@components/Brand/Logo'
-import { useLocation } from 'react-router-dom'
+import { useState } from 'react'
 
 interface MobileProps extends FlexProps {
   onOpen: () => void
 }
 
+const colors = ['blue', 'red', 'green', 'orange', 'yellow', 'teal', 'cyan', 'purple', 'pink']
+const randomNumber = Math.ceil(Math.random() * 8)
+
 export const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
+  const [user, setUser] = useState<User>(null)
   const { pathname } = useLocation()
   const isMovieDetailsLocation = pathname.includes('/movie')
+  const navigate = useNavigate()
 
   const auth = getAuth()
+
+  const authStateObserver = auth.onAuthStateChanged((user) => {
+    if (user) {
+      setUser(user)
+    }
+  })
+
+  // useEffect(() => {
+  //   console.log(auth.currentUser)
+
+  //   setTimeout(() => {
+  //     console.log(auth.currentUser)
+
+  //   }, 5000)
+
+  // }, [auth.currentUser])
+
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -59,48 +84,68 @@ export const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 
       <Logo display={{ base: 'flex', md: 'none' }} />
 
-      <Flex gap='2rem' alignItems='center'>
+      <Flex gap='1.5rem' mr='2rem' alignItems='center'>
         <ColorModeSwitch display={{ base: 'none', md: 'flex' }} />
 
-        <HStack spacing={{ base: '0', md: '6' }}>
-          <Flex alignItems={'center'}>
-            <Menu>
-              <MenuButton py={2} transition='all 0.3s' _focus={{ boxShadow: 'none' }}>
-                <HStack>
-                  <Avatar
-                    size={'sm'}
-                    src={
-                      'https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
-                    }
-                  />
-                  <VStack
-                    display={{ base: 'none', md: 'flex' }}
-                    alignItems='flex-start'
-                    spacing='1px'
-                    ml='2'
+        {user ? (
+          <HStack spacing={{ base: '0', md: '6' }}>
+            <Flex alignItems={'center'}>
+              <Menu>
+                <MenuButton py={2} transition='all 0.3s' _focus={{ boxShadow: 'none' }}>
+                  <HStack>
+                    <Avatar
+                      size={'sm'}
+                      name={auth.currentUser?.displayName}
+                      src={auth.currentUser?.photoURL}
+                      bg={`${colors[randomNumber]}.300`}
+                    />
+                    <VStack
+                      display={{ base: 'none', md: 'flex' }}
+                      alignItems='flex-start'
+                      spacing='1px'
+                      ml='2'
+                    >
+                      <Text fontSize='sm'>{auth.currentUser?.displayName}</Text>
+                      <Text fontSize='xs' color='gray.600'>
+                        User
+                      </Text>
+                    </VStack>
+                    <Box display={{ base: 'none', md: 'flex' }}>
+                      <FaChevronDown size='0.8rem' />
+                    </Box>
+                  </HStack>
+                </MenuButton>
+                <MenuList
+                  bg={useColorModeValue('white', 'gray.900')}
+                  borderColor={useColorModeValue('gray.200', 'gray.700')}
+                >
+                  <MenuItem>Profile</MenuItem>
+                  <MenuItem>Settings</MenuItem>
+                  <MenuDivider />
+                  <MenuItem
+                    onClick={() => {
+                      signOut(auth)
+                      setTimeout(() => {
+                        navigate('/login')
+                      }, 1000)
+                    }}
                   >
-                    <Text fontSize='sm'>Justina Clark</Text>
-                    <Text fontSize='xs' color='gray.600'>
-                      Admin
-                    </Text>
-                  </VStack>
-                  <Box display={{ base: 'none', md: 'flex' }}>
-                    <FaChevronDown size='0.8rem' />
-                  </Box>
-                </HStack>
-              </MenuButton>
-              <MenuList
-                bg={useColorModeValue('white', 'gray.900')}
-                borderColor={useColorModeValue('gray.200', 'gray.700')}
-              >
-                <MenuItem>Profile</MenuItem>
-                <MenuItem>Settings</MenuItem>
-                <MenuDivider />
-                <MenuItem onClick={() => signOut(auth)}>Sign out</MenuItem>
-              </MenuList>
-            </Menu>
-          </Flex>
-        </HStack>
+                    Sign out
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            </Flex>
+          </HStack>
+        ) : (
+          <Button
+            as={Link}
+            to='/login'
+            color={useColorModeValue('blue.500', 'gray.300')}
+            variant='link'
+          >
+            Sign In
+          </Button>
+        )}
       </Flex>
     </Flex>
   )
