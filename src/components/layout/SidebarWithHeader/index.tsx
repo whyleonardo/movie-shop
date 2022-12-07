@@ -1,11 +1,4 @@
-import {
-  Box,
-  Drawer,
-  DrawerContent,
-  useColorModeValue,
-  useDisclosure,
-} from '@chakra-ui/react'
-
+import { Box, Drawer, DrawerContent, useColorModeValue, useDisclosure } from '@chakra-ui/react'
 
 import { AnimatedRoutes } from '@components/layout/AnimatedRoutes'
 import { Home } from '@pages/Home'
@@ -32,7 +25,8 @@ export const SidebarWithHeader = () => {
         onClose={onClose}
         returnFocusOnClose={false}
         onOverlayClick={onClose}
-        size='full'>
+        size='full'
+      >
         <DrawerContent>
           <SidebarContent onClose={onClose} />
         </DrawerContent>
@@ -42,7 +36,7 @@ export const SidebarWithHeader = () => {
       <MobileNav onOpen={onOpen} />
       <Box
         ml={{ base: 0, md: 60 }}
-        p='4'
+        p={pathname.includes('/movie') ? 0 : 4}
         css={{
           '&::-webkit-scrollbar': {
             width: '4px',
@@ -61,4 +55,3 @@ export const SidebarWithHeader = () => {
     </Box>
   )
 }
-

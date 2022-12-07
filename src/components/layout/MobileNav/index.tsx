@@ -20,7 +20,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { User, getAuth, signOut } from 'firebase/auth'
 import { useEffect, useState } from 'react'
 
-import { BackPreviousPage } from '@components/Buttons/BackPreviousPage'
 import { ColorModeSwitch } from '@components/ColorModeSwitch'
 import { Logo } from '@components/Brand/Logo'
 
@@ -48,6 +47,7 @@ export const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   }, [])
   return (
     <Flex
+      {...rest}
       ml={{ base: 0, md: 60 }}
       px={{ base: 4, md: 4 }}
       gap='2rem'
@@ -56,22 +56,15 @@ export const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       bg={useColorModeValue('white', 'gray.900')}
       borderBottomWidth='1px'
       borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
-      justifyContent={
-        isMovieDetailsLocation ? 'space-between' : { base: 'space-between', md: 'flex-end' }
-      }
-      {...rest}
+      justifyContent={{ base: 'space-between', md: 'end' }}
     >
-      {isMovieDetailsLocation ? (
-        <BackPreviousPage />
-      ) : (
-        <IconButton
-          display={{ base: 'flex', md: 'none' }}
-          onClick={onOpen}
-          variant='outline'
-          aria-label='open menu'
-          icon={<FaBars />}
-        />
-      )}
+      <IconButton
+        display={{ base: 'flex', md: 'none' }}
+        onClick={onOpen}
+        variant='outline'
+        aria-label='open menu'
+        icon={<FaBars />}
+      />
 
       <Logo display={{ base: 'flex', md: 'none' }} />
 

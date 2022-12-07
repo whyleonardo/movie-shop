@@ -19,6 +19,7 @@ export const BackPreviousPage = () => {
       _focus={{ bg: 'none' }}
       _hover={{ bg: 'none', scale: 1.1 }}
       cursor='pointer'
+      zIndex='10'
     />
   )
 }
