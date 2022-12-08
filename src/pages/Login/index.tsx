@@ -83,8 +83,8 @@ export const Login = () => {
       alignItems='center'
     >
       <Stack minW={{ base: '100%', md: '30rem' }}>
-        <Stack spacing='6'>
-          <Logo fontSize='2rem' alignSelf='center' />
+        <Stack display='flex' spacing='6'>
+          <Logo display='flex' fontSize='2rem' alignSelf='center' />
           <Stack spacing={{ base: '2', md: '2' }} textAlign='center'>
             <Heading size='lg'>Log in to your account</Heading>
             <HStack spacing='1' justify='center'>
@@ -96,13 +96,13 @@ export const Login = () => {
           </Stack>
         </Stack>
         <Box
-          py={{ base: '0', sm: '8' }}
+          py={{ base: '4', sm: '8' }}
           px={{ base: '4', sm: '10' }}
           bg={useBreakpointValue({ base: 'transparent', sm: 'bg-surface' })}
           boxShadow={{ base: 'none', sm: 'md' }}
           border='1px'
           borderColor={useColorModeValue('gray.100', 'gray.700')}
-          borderRadius={{ base: 'none', sm: 'xl' }}
+          borderRadius={{ base: 'md', sm: 'xl' }}
         >
           {' '}
           <form onSubmit={formik.handleSubmit}>

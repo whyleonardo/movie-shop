@@ -4,7 +4,7 @@ import { FaFilm } from 'react-icons/fa'
 interface LogoProps {
   fontSize?: string
   alignSelf?: string
-  display?: { base: string, md: string } | 'flex'
+  display?: { base: string; md: string } | 'flex'
 }
 
 export const Logo = ({ display, fontSize, alignSelf }: LogoProps) => {
@@ -14,11 +14,10 @@ export const Logo = ({ display, fontSize, alignSelf }: LogoProps) => {
       alignSelf={alignSelf}
       fontSize={fontSize}
       color='blue.500'
-      justifyContent='center'
       alignItems='center'
     >
       <Icon as={FaFilm} color='blue.500' />
       Shop
-    </Heading >
+    </Heading>
   )
 }

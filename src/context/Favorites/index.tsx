@@ -21,7 +21,6 @@ interface FavoritesProviderProps {
 
 export const FavoritesProvider = ({ children }: FavoritesProviderProps) => {
   const [favoriteMovies, setFavoriteMovies] = useState<MovieProps[]>([])
-  // const [avoidFavoritesLocalStorage, setAvoidFavoritesLocalStorage] = useState(true)
 
   const toast = useToast({
     duration: 2000,
@@ -32,7 +31,6 @@ export const FavoritesProvider = ({ children }: FavoritesProviderProps) => {
   const filteredFavoritestMoviesID = favoriteMovies.map((movie: MovieProps) => movie.id)
 
   const handleAddMovieToFavorites = (movie: MovieProps) => {
-    // setAvoidFavoritesLocalStorage(false)
     if (!filteredFavoritestMoviesID.includes(movie.id)) {
       setFavoriteMovies([...favoriteMovies, movie])
     }
@@ -44,7 +42,6 @@ export const FavoritesProvider = ({ children }: FavoritesProviderProps) => {
   }
 
   const handleRemoveMovieFromFavorites = (id: number) => {
-    // setAvoidFavoritesLocalStorage(false)
     const removeMovieFromCart = favoriteMovies
       .map((movie: MovieProps) => movie)
       .filter((movie: MovieProps) => movie.id !== id && movie)
@@ -57,15 +54,11 @@ export const FavoritesProvider = ({ children }: FavoritesProviderProps) => {
   }
 
   useEffect(() => {
-    // setAvoidFavoritesLocalStorage(true)
-
     const favoriteLocalStorage = JSON.parse(localStorage.getItem('favorites') as string)
     favoriteLocalStorage !== null && setFavoriteMovies(favoriteLocalStorage)
   }, [])
 
   useEffect(() => {
-    // avoidFavoritesLocalStorage === false &&
-
     localStorage.setItem('favorites', JSON.stringify(favoriteMovies))
   }, [favoriteMovies])
 

@@ -46,12 +46,11 @@ export const Register = () => {
     validateOnBlur: true,
     validationSchema: registerSchema,
     onSubmit: (values) => {
+      setButtonLoading(true)
       handleRegisterUserWithEmailAndPassword(values)
         .then(() => {
-          setButtonLoading(true)
           navigate('/')
         })
-
         .catch((error) => {
           toast({
             description: error.message,
@@ -77,7 +76,7 @@ export const Register = () => {
     >
       <Stack minW={{ base: '100%', md: '30rem' }}>
         <Stack spacing='6'>
-          <Logo fontSize='2rem' alignSelf='center' />
+          <Logo display='flex' fontSize='2rem' alignSelf='center' />
           <Stack spacing={{ base: '2', md: '2' }} textAlign='center'>
             <Heading size='lg'>Register a new account</Heading>
             <HStack spacing='1' justify='center'>
@@ -89,13 +88,13 @@ export const Register = () => {
           </Stack>
         </Stack>
         <Box
-          py={{ base: '0', sm: '8' }}
+          py={{ base: '4', sm: '8' }}
           px={{ base: '4', sm: '10' }}
           bg={useBreakpointValue({ base: 'transparent', sm: 'bg-surface' })}
           boxShadow={{ base: 'none', sm: 'md' }}
           border='1px'
           borderColor={useColorModeValue('gray.100', 'gray.700')}
-          borderRadius={{ base: 'none', sm: 'xl' }}
+          borderRadius={{ base: 'md', sm: 'xl' }}
         >
           <Stack spacing='6'>
             <form onSubmit={formik.handleSubmit}>
@@ -154,7 +153,7 @@ export const Register = () => {
                   color='white'
                   mt='2rem'
                 >
-                  {buttonLoading ? 'Register' : <Spinner />}
+                  {!buttonLoading ? 'Register' : <Spinner />}
                 </Button>
               </Stack>
             </form>

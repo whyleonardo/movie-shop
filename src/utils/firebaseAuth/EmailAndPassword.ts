@@ -28,7 +28,7 @@ export const handleRegisterUserWithEmailAndPassword = async ({
 
   await addDoc(userCollectionRef, {
     email: auth.currentUser?.email,
-    username: auth.currentUser?.displayName,
+    username: username,
     uid: auth.currentUser?.uid,
     createdAt: new Date().toLocaleDateString('en-US', {
       minute: '2-digit',
@@ -37,6 +37,7 @@ export const handleRegisterUserWithEmailAndPassword = async ({
       month: 'long',
       year: 'numeric',
     }),
+    favoritesMovies: ['1', '2'],
   })
 }
 
