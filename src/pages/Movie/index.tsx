@@ -11,8 +11,9 @@ import {
   Text,
   VStack,
   chakra,
+  useColorModeValue,
 } from '@chakra-ui/react'
-import { BackPreviousPage } from '@components/Buttons/BackPreviousPage'
+
 import {
   FaCalendarAlt,
   FaCoins,
@@ -21,6 +22,8 @@ import {
   FaMoneyBillAlt,
   FaStar,
 } from 'react-icons/fa'
+
+import { BackPreviousPage } from '@components/Buttons/BackPreviousPage'
 import { api } from '@data/api'
 import { currecyStyleFormat } from '@utils/currencyStyleFormat'
 import { motion } from 'framer-motion'
@@ -52,7 +55,10 @@ export const Movie = () => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           position='absolute'
-          h='90%'
+          bg={useColorModeValue('gray.100', 'gray.900')}
+          top='0'
+          left='0'
+          h='100vh'
           w='full'
           alignItems='center'
           justifyContent='center'
@@ -72,11 +78,13 @@ export const Movie = () => {
           pt='5rem'
           h='100vh'
           w='full'
+          bg={useColorModeValue('gray.100', 'gray.900')}
           bgImage={api.backdrop_img + data?.backdrop_path}
           bgSize='cover'
           bgPosition='center'
           overflowX='hidden'
           justifyContent={{ md: 'center' }}
+          color='white'
         >
           <Box as='header' w='full' position='absolute' m='6' top='0' left='0'>
             <BackPreviousPage />
@@ -144,7 +152,7 @@ export const Movie = () => {
                 </Button>
               </VStack>
 
-              <VStack fontSize={{ md: '2rem' }} minW={{ md: '30%' }}>
+              <VStack fontSize={{ base: '1.2rem', md: '2rem' }} minW={{ md: '30%' }}>
                 <Text display='flex' alignItems='center' gap='1'>
                   <Icon as={FaMoneyBillAlt} />
                   Budget: {currecyStyleFormat(data?.budget)}
@@ -171,6 +179,10 @@ export const Movie = () => {
       )}
 
       <Box
+        as={motion.div}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
         position='absolute'
         zIndex='1001'
         left='0'
