@@ -2,14 +2,15 @@ import { Grid, HStack, Select, Stack, Text } from '@chakra-ui/react'
 import { RefObject, useState } from 'react'
 import { MovieCard } from '@components/Cards/MovieCard'
 import { MovieProps } from 'src/types/MovieTypes'
+import { getAuth } from 'firebase/auth'
 import { motion } from 'framer-motion'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { useFavorites } from '@context/Favorites'
 
 export const Favorites = () => {
-  const { favoriteMovies } = useFavorites()
+  const { currentUser } = getAuth()
+  const { favoriteMoviesInUserDB } = useFavorites()
   const [parent] = useAutoAnimate()
-  const [page, setPage] = useState(1)
 
   const [sortState, setSortState] = useState('none')
 
@@ -56,18 +57,24 @@ export const Favorites = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        display={!favoriteMovies.length ? 'flex' : 'grid'}
+        display={!favoriteMoviesInUserDB?.length ? 'flex' : 'grid'}
         justifyContent='center'
-        h={!favoriteMovies.length ? '55vh' : 'none'}
+        h={!favoriteMoviesInUserDB?.length ? '55vh' : 'none'}
       >
-        {favoriteMovies.sort(sortMethods[sortState].method).map((movie: MovieProps) => (
+        {favoriteMoviesInUserDB?.sort(sortMethods[sortState].method).map((movie: MovieProps) => (
           <MovieCard key={movie.id} movie={movie} />
         ))}
 
-        {!favoriteMovies.length && (
+        {!currentUser ? (
           <Text fontWeight='bold' alignSelf='center'>
-            You not added any movie here! ☹️
+            Sign In to see your favorite movies!
           </Text>
+        ) : (
+          !favoriteMoviesInUserDB?.length && (
+            <Text fontWeight='bold' alignSelf='center'>
+              You not added any movie here! ☹️
+            </Text>
+          )
         )}
       </Grid>
     </Stack>

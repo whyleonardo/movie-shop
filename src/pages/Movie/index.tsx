@@ -40,8 +40,6 @@ export const Movie = () => {
     url: query,
   })
 
-  currecyStyleFormat
-
   useEffect(() => {
     refetch()
   }, [])

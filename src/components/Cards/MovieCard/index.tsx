@@ -9,7 +9,6 @@ import {
   Stack,
   StackProps,
   Text,
-  useBreakpointValue,
   useColorModeValue,
 } from '@chakra-ui/react'
 
@@ -39,17 +38,17 @@ export const MovieCard = (props: Props) => {
   const resumedName = title.length > 27 ? `${title.slice(0, 27).trim()}...` : title
 
   return (
-    <Stack spacing={useBreakpointValue({ base: '4', md: '5' })} {...rootProps} role='group'>
+    <Stack spacing={{ base: '4', md: '5' }} {...rootProps} role='group'>
       <Box position='relative'>
         <AspectRatio ratio={12 / 16}>
           <Image
             src={api.imageURL + poster_path}
             alt={title}
             draggable='false'
-            fallback={<Skeleton rounded={useBreakpointValue({ base: 'md', md: 'xl' })} />}
-            borderRadius={useBreakpointValue({ base: 'md', md: 'xl' })}
+            fallback={<Skeleton rounded={{ base: 'md', md: 'xl' }} />}
+            borderRadius={{ base: 'md', md: 'xl' }}
             transform='auto'
-            _groupHover={{ scale: useBreakpointValue({ base: 'none', md: 1.05 }) }}
+            _groupHover={{ scale: { base: 'none', md: 1.05 } }}
             transition='350ms ease'
           />
         </AspectRatio>

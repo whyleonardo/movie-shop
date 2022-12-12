@@ -22,15 +22,20 @@ interface LinkItemProps {
 
 export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   const { moviesCart } = useCart()
-  const { favoriteMovies } = useFavorites()
+  const { favoriteMoviesInUserDB } = useFavorites()
 
   const LinkItems: Array<LinkItemProps> = [
     { name: 'Home', icon: FaHome, path: '/' },
     { name: 'Popular', icon: FaChartLine, path: '/popular' },
     { name: 'Top Rated', icon: FaStar, path: '/top-rated' },
     { name: 'Upcoming', icon: FaCalendar, path: '/upcoming' },
-    { name: 'Favorites', icon: FaHeart, path: '/favorites', itemsLength: favoriteMovies.length },
-    { name: 'Cart', icon: FaShoppingCart, path: '/cart', itemsLength: moviesCart.length },
+    {
+      name: 'Favorites',
+      icon: FaHeart,
+      path: '/favorites',
+      itemsLength: favoriteMoviesInUserDB?.length,
+    },
+    { name: 'Cart', icon: FaShoppingCart, path: '/cart', itemsLength: moviesCart?.length },
   ]
 
   return (

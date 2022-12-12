@@ -2,6 +2,7 @@ import { Icon, IconButton, LightMode } from '@chakra-ui/react'
 import { FaHeart } from 'react-icons/fa'
 import { FiHeart } from 'react-icons/fi'
 import { MovieProps } from 'src/types/MovieTypes'
+import { getAuth } from 'firebase/auth'
 import { useFavorites } from '@context/Favorites'
 
 interface FavouriteButtonProps {
@@ -9,13 +10,16 @@ interface FavouriteButtonProps {
 }
 
 export const FavouriteButton = ({ movie }: FavouriteButtonProps) => {
+  const { currentUser } = getAuth()
+
   const { handleAddMovieToFavorites, handleRemoveMovieFromFavorites, filteredFavoritestMoviesID } =
     useFavorites()
 
-  const isMovieOnFavorites = filteredFavoritestMoviesID.includes(movie.id)
+  const isMovieOnFavorites = filteredFavoritestMoviesID?.includes(movie.id)
   return (
     <LightMode>
       <IconButton
+        disabled={!currentUser}
         isRound
         bg='white'
         color='red.500'

@@ -13,7 +13,6 @@ import {
   Input,
   Stack,
   Text,
-  useBreakpointValue,
   useColorModeValue,
   useToast,
 } from '@chakra-ui/react'
@@ -24,8 +23,8 @@ import { AuthButtonGroup } from '@components/Buttons/AuthButtonGroup'
 import { Logo } from '@components/Brand/Logo'
 import { PasswordField } from '@components/Inputs/PasswordField'
 import { handleSignInUserWithEmailAndPassword } from '@utils/firebaseAuth/EmailAndPassword'
-import { useFormik } from 'formik'
 import { useEffect } from 'react'
+import { useFormik } from 'formik'
 
 const loginSchema = Yup.object({
   email: Yup.string().email('Invalid email address').required('Insert an valid email'),
@@ -98,7 +97,7 @@ export const Login = () => {
         <Box
           py={{ base: '4', sm: '8' }}
           px={{ base: '4', sm: '10' }}
-          bg={useBreakpointValue({ base: 'transparent', sm: 'bg-surface' })}
+          bg={{ base: 'transparent', sm: 'bg-surface' }}
           boxShadow={{ base: 'none', sm: 'md' }}
           border='1px'
           borderColor={useColorModeValue('gray.100', 'gray.700')}

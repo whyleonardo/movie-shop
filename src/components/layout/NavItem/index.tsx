@@ -49,7 +49,7 @@ export const NavItem = ({ icon, children, path, onClose, itemsLength, ...rest }:
         </Flex>
 
         {itemsLength > 0 && (
-          <Circle size='1.5rem' bg='blue.500' _groupHover={{ bg: 'blue.800' }} color='white'>
+          <Circle size='1.5rem' bg='blue.600' _groupHover={{ bg: 'blue.800' }} color='white'>
             {itemsLength}
           </Circle>
         )}

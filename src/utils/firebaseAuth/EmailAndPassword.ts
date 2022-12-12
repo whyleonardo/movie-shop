@@ -1,9 +1,9 @@
+import { addDoc, updateDoc } from 'firebase/firestore'
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   updateProfile,
 } from 'firebase/auth'
-import { addDoc } from 'firebase/firestore'
 import { auth } from '@services/firebase'
 import { userCollectionRef } from '@utils/firestoreCalls'
 
@@ -26,7 +26,7 @@ export const handleRegisterUserWithEmailAndPassword = async ({
     displayName: username,
   })
 
-  await addDoc(userCollectionRef, {
+  const docRef = await addDoc(userCollectionRef, {
     email: auth.currentUser?.email,
     username: username,
     uid: auth.currentUser?.uid,
@@ -37,7 +37,11 @@ export const handleRegisterUserWithEmailAndPassword = async ({
       month: 'long',
       year: 'numeric',
     }),
-    favoritesMovies: ['1', '2'],
+    favoriteMovies: [],
+  })
+
+  await updateDoc(docRef, {
+    docId: docRef.id,
   })
 }
 

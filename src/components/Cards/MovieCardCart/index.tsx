@@ -9,7 +9,6 @@ import {
   StackProps,
   Text,
   chakra,
-  useBreakpointValue,
   useColorModeValue,
 } from '@chakra-ui/react'
 
@@ -42,7 +41,7 @@ export const MovieCardCart = (props: Props) => {
     <>
       <HStack
         flexDirection='row'
-        spacing={useBreakpointValue({ base: '4', md: '5' })}
+        spacing={{ base: '4', md: '5' }}
         {...rootProps}
         minW='100%'
         justifyContent='space-between'
@@ -54,8 +53,8 @@ export const MovieCardCart = (props: Props) => {
                 src={api.imageURL + poster_path}
                 alt={title}
                 draggable='false'
-                fallback={<Skeleton rounded={useBreakpointValue({ base: 'md', md: 'xl' })} />}
-                borderRadius={useBreakpointValue({ base: 'md', md: 'xl' })}
+                fallback={<Skeleton rounded={{ base: 'md', md: 'xl' }} />}
+                borderRadius={{ base: 'md', md: 'xl' }}
                 transition='350ms ease'
               />
             </AspectRatio>

@@ -12,7 +12,6 @@ import {
   Spinner,
   Stack,
   Text,
-  useBreakpointValue,
   useColorModeValue,
   useToast,
 } from '@chakra-ui/react'
@@ -90,7 +89,7 @@ export const Register = () => {
         <Box
           py={{ base: '4', sm: '8' }}
           px={{ base: '4', sm: '10' }}
-          bg={useBreakpointValue({ base: 'transparent', sm: 'bg-surface' })}
+          bg={{ base: 'transparent', sm: 'bg-surface' }}
           boxShadow={{ base: 'none', sm: 'md' }}
           border='1px'
           borderColor={useColorModeValue('gray.100', 'gray.700')}
