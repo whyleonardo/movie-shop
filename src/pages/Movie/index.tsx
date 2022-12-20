@@ -28,7 +28,7 @@ import { api } from '@data/api'
 import { currecyStyleFormat } from '@utils/currencyStyleFormat'
 import { motion } from 'framer-motion'
 import useAxios from 'axios-hooks'
-import { useEffect } from 'react'
+import { Fragment, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 const ChakraExternalLink = chakra(FaExternalLinkAlt)
@@ -120,12 +120,10 @@ export const Movie = () => {
                 >
                   {data &&
                     data.genres.map((genre) => (
-                      <>
-                        <Text m='0 !important' key={genre.id}>
-                          {genre.name}
-                        </Text>
+                      <Fragment key={genre.id}>
+                        <Text m='0 !important'>{genre.name}</Text>
                         <Text _last={{ display: 'none' }}>•</Text>
-                      </>
+                      </Fragment>
                     ))}
                 </Stack>
 

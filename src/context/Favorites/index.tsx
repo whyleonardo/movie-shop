@@ -59,7 +59,6 @@ export const FavoritesProvider = ({ children }: FavoritesProviderProps) => {
     })
   }
 
-  // TODO: REMOVE MOVIE FROM FAVORITES ON FIREBASE
   const handleRemoveMovieFromFavorites = async (id: number) => {
     const removeMovieFromCart = favoriteMovies
       .map((movie: MovieProps) => movie)
@@ -97,13 +96,13 @@ export const FavoritesProvider = ({ children }: FavoritesProviderProps) => {
 
   useEffect(() => {
     getFavoriteMoviesFromUserDB()
-    const favoriteLocalStorage = JSON.parse(localStorage.getItem('favorites') as string)
-    favoriteLocalStorage !== null && setFavoriteMovies(favoriteLocalStorage)
+    // const favoriteLocalStorage = JSON.parse(localStorage.getItem('favorites') as string)
+    // favoriteLocalStorage !== null && setFavoriteMovies(favoriteLocalStorage)
   }, [])
 
   useEffect(() => {
     getFavoriteMoviesFromUserDB()
-    localStorage.setItem('favorites', JSON.stringify(favoriteMovies))
+    // localStorage.setItem('favorites', JSON.stringify(favoriteMovies))
   }, [favoriteMovies])
 
   const values = {
